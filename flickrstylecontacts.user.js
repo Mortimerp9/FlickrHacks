@@ -29,6 +29,7 @@
 // @include http://*flickr.com/photos_comments.gne*
 // @include http://*flickr.com/people/*
 // @include http://*flickr.com/photos/*/sets/*/comments/
+// @exclude http://*flickr.com/photos/organize*
 // ==/UserScript==
 
 (function () {

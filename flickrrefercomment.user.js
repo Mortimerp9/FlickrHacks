@@ -137,7 +137,10 @@
 					} else if(referrer.indexOf('/interesting') >= 0 && referrer.indexOf('/explore') >= 0) {
 						//we come from one of the interesting calendar
 						this.insertComment("Seen in the interestingness archives.",referrer);
-					} else if(referrer.indexOf('/explore') >= 0) {
+					} else if(referrer.indexOf('http://www.raum-fuer-notizen.de/explore/index.php?username=') >= 0) {
+						//we come from the individual explore page
+						this.insertComment("Seen on my individual explore page.",referrer);
+					}  else if(referrer.indexOf('/explore') >= 0) {
 						//we come from the explore page
 						this.insertComment("Seen on the explore page.",referrer);
 					} else if(referrer.indexOf('/search') >= 0) {

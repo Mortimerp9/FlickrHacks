@@ -7,9 +7,9 @@
 // @name	Flickr Auto Page
 // @namespace	http://6v8.gamboni.org/Flickr-Auto-Pagination.html
 // @description removes the need to paginate when browsing flickr
-// @version        0.8
-// @date           2007-06-13
-// @creator        Pierre Andrews (mortimer.pa@free.fr)
+// @version        0.99
+// @date           2007-07-22
+// @creator        Pierre Andrews (mortimer.pa@free.fr) , pt translation by Perla* <http://www.flickr.com/photos/bobnperla/>
 // @include http://*flickr.com/groups/*/pool*
 // @include http://*flickr.com/groups/*/admin
 // @include http://*flickr.com/groups/*/discuss*
@@ -33,6 +33,11 @@
 
 (function () {
 
+	var THRESHOLD = 340;
+	if(matches = /\/photos\/friends\/?(page([0-9]+))?\/?$/.exec(document.location.pathname)) {
+		THRESHOLD = 100;
+	}
+
 	var win = window;
 
 	//update information
@@ -42,8 +47,8 @@
 		description: "removes the need to paginate when browsing flickr.",
 		source: "http://6v8.gamboni.org/Flickr-Auto-Page.html",			// script homepage/description URL
 		identifier: "http://6v8.gamboni.org/IMG/js/flickrautopage.user.js",
-		version: "0.8",								// version
-		date: (new Date(2007, 06, 13))		// update date
+		version: "0.99",								// version
+		date: (new Date(2007, 07,22))		// update date
 		.valueOf()
 	};
 
@@ -145,6 +150,9 @@
 				var currentLang = this.localisations[this.selectedLang];
 				if(!currentLang) currentLang = this.localisations[this.localisations.defaultLang];
 				var local = currentLang[string];
+				if(!local) {
+					local = this.localisations[this.localisations.defaultLang][string];
+				} 
 				if(!local) return string;
 				for(arg in params) {
 					var rep = new RegExp('@'+arg+'@','g');
@@ -198,7 +206,24 @@
 						'nopeople':'Pas d\'autre Membre',
 						'nocontact':'Pas d\'autre Contact'
 						},
-						defaultLang:'en-us'
+				'pt-br': {
+					// E
+					'enable' : 'Capacitar',
+					// L
+					'loading' : 'Procurar p&aacute;gina:@nbrpage@/@total@.',
+					// N
+					'nocomment' : 'Sem mais coment&aacute;rios',
+					'nocontact' : 'Sem mais contatos',
+					'nodiscussion' : 'Sem mais discuss&otilde;es',
+					'nopeople' : 'Mais ningu&eacute;m',
+					'nophoto' : 'Mais nenhuma foto',
+					'noreply' : 'Sem mais respostas',
+					'notopic' : 'Mais nenhum t&oacute;pico',
+					// S
+					'showing' : 'Mostrando a p&aacute;gina:@page@/@total@.'
+				},
+				
+				defaultLang:'en-us'
 		}),
 		next_request:1,
 		received: true,
@@ -210,15 +235,6 @@
 		watch_cb: undefined,
 		stop_watch: false,
 
-		findTotalPage: function(string) {
-			var nbr = 0;
-			while(matches = /([0-9, '.]+)/g.exec(string)) {
-				var x = parseInt(matches[1].replace(',',''));
-				if(x > nbr) nbr = x;
-			}
-			M8_log(nbr);
-			return nbr;
-		},
 
 		//inspired by http://squarefree.com/userscripts
 		//using iframes instead of xmlhttpRequest applies javascripts and other GM scripts to the page :D
@@ -273,6 +289,8 @@
 				}
 				self.first = false;
 				
+				if(matches = /\/photos\/friends\/?(page([0-9]+))?\/?$/.exec(document.location.pathname))
+					document.location.hash = 'infinitepage'+(self.next_request-1);
 				//get rid of iframe
 				setTimeout( function() { iframe.parentNode.removeChild(iframe); }, 1500);
 			}, false);
@@ -304,10 +322,12 @@
 			var processReply = function(body,insert) {
 				//move the elements
 				var cnt = 0;
+
 				foreach(xpath,
 						function(elt) {
 							cnt++;
-							insert.appendChild(elt);
+							var node = document.importNode(elt,true);
+							insert.appendChild(node);
 							elt.className += ' AutoPageAddition'+self.next_request;
 						},
 						body
@@ -446,7 +466,7 @@
 				if(matches[3]) this.next_request= parseInt(matches[2]);
 				msg = this.localiser.localise('noreply');
 				url = "http://"+document.location.host+"/help/forum/"+lang+"/?page=@P@";	
-				xpath = "//table[@class='TopicListing'][2]/tbody/tr";
+				xpath = "//table[@class='TopicListing']/tbody/tr";
 			} //for the contacts photo 
 			else if(matches = /\/photos\/friends\/?(page([0-9]+))?\/?$/.exec(document.location.pathname)) {
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
@@ -1005,7 +1025,8 @@
 				}
 
 				this.paginator.parentNode.setAttribute('style',
-													   'position:fixed;'+
+													   'position:absolute;'+
+													   'overflow: auto;'+
 													   'top:100px;'+
 													   'left:0;'+
 													   'width: 8em;'
@@ -1064,7 +1085,8 @@
 				var wh = window.innerHeight ? window.innerHeight : document.body.clientHeight;
 				var total = (document.body.scrollHeight - wh);
 				var remain = total - sc;
-				if(remain < 340){
+				
+				if(remain < THRESHOLD){
 					cb();
 				}
 			}catch(e){
@@ -1074,6 +1096,16 @@
 				if(!this.stop_watch) setTimeout(getObjectMethodClosure1(this,'watch_scroll',cb,msg),100);
 			} else
 			this.msg_div.innerHTML = self.localiser.localise('showing',{'page':this.nbr_page,'total':this.nbr_page})+' '+msg;
+		},
+		
+		findTotalPage: function(string) {
+			var nbr = 0;
+			while(matches = /([0-9, '.]+)/g.exec(string)) {
+				var x = parseInt(matches[1].replace(',',''));
+				if(x > nbr) nbr = x;
+			}
+			M8_log(nbr);
+			return nbr;
 		}
 
 	};
@@ -1096,4 +1128,3 @@
 	} catch (ex) {}
 
 })();
-

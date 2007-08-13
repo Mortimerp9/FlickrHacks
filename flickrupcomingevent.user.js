@@ -2,10 +2,10 @@
 // @name	Flickr Upcoming Event
 // @namespace	http://6v8.gamboni.org/
 // @description This is a greasemonkey script to enhance flickr pages and be able to easilly associate photos with an upcoming event. When a shot is associated to an event, it can then be tagged and located from the data provided by the event.
-// @version        0.6
+// @version        0.7
 // @identifier	http://6v8.gamboni.org/IMG/js/flickrupcomingevent.user.js
-// @date           2007-26-06
-// @creator        Pierre Andrews (mortimer.pa@free.fr)
+// @date           2007-06-26
+// @creator        Pierre Andrews (mortimer.pa@free.fr) , pt translation by Perla* <http://www.flickr.com/photos/bobnperla/>
 // @include http://*flickr.com/photos/*/*
 // @exclude http://*flickr.com/photos/organize*
 // ==/UserScript==
@@ -52,13 +52,13 @@ var UPCOMING_API_URL = 'http://upcoming.yahooapis.com/services/rest/';
 		namespace: "http://6v8.gamboni.org/",
 		description: "This is a greasemonkey script to enhance flickr pages and be able to easilly associate photos with an upcoming event. When a shot is associated to an event, it can then be tagged and located from the data provided by the event.",
 		identifier: "http://6v8.gamboni.org/IMG/js/flickrupcomingevent.user.js",
-		version: "0.6",								// version
-		date: (new Date("2007-26-06"))		// update date
+		version: "0.7",								// version
+		date: (new Date("2007-06-28"))		// update date
 		.valueOf()
 	};
 	
 	/*
-	  Path to wrap descriptions by Johan Sundstrï¿½m 
+	  Path to wrap descriptions by Johan Sundstr�m 
 	  http://www.lysator.liu.se/~jhs/
 	*/
 	function wbr( html ) {
@@ -145,6 +145,9 @@ var UPCOMING_API_URL = 'http://upcoming.yahooapis.com/services/rest/';
 				var currentLang = this.localisations[this.selectedLang];
 				if(!currentLang) currentLang = this.localisations[this.localisations.defaultLang];
 				var local = currentLang[string];
+				if(!local) {
+					local = this.localisations[this.localisations.defaultLang][string];
+				} 
 				if(!local) return string;
 				for(arg in params) {
 					var rep = new RegExp('@'+arg+'@','g');
@@ -227,6 +230,38 @@ var UPCOMING_API_URL = 'http://upcoming.yahooapis.com/services/rest/';
 					// V
 					'venue' : 'Lieu'
 				},
+				'pt-br': {// T
+					'Tag' : 'R&oacute;tulo',
+					// A
+					'auth_1' : 'Primeiro voc&ecirc; tem que autorizar a conex&atilde;o com o "upcoming". Primeiro v&aacute;',
+					'auth_2' : 'Quando terminar, volte para esta p&aacute;gina e',
+					'auth_3' : 'Digite aqui o "frob" dado pelo "upcoming"',
+					// D
+					'description' : 'Descri&ccedil;&atilde;o',
+					// E
+					'error' : 'Houve um erro, por favor veja o console para detalhes',
+					'event' : 'Evento',
+					'everyone' : 'Todas as pessoas',
+					// F
+					'fetch_events' : 'Procurando eventos',
+					'finish_auth' : 'Fim da Autoriza&ccedil;&atilde;o',
+					// G
+					'geotag' : '"geotag" esta foto',
+					// L
+					'loading_details' : 'Pegando detalhes do evento',
+					// M
+					'metro' : 'Metro',
+					// S
+					'script_title' : 'Ferramenta do evento "Upcoming.org"',
+					'searching' : 'Buscando',
+					'see_other' : '<b>Veja outras fotos</b> deste evento feitas por: @this_user@, @everyone@',
+					'select_event' : 'Selecione o evento onde esta foto foi tirada',
+					// T
+					'this_user' : 'Este usu&aacute;rio',
+					// V
+					'venue' : 'Local'
+				},
+
 				defaultLang: 'en-us'
 			}),
 
@@ -312,7 +347,7 @@ var UPCOMING_API_URL = 'http://upcoming.yahooapis.com/services/rest/';
 				for each(tag in unsafeWindow.global_photos[unsafeWindow.page_photo_id].tags_rawA) {
 						if(tag.indexOf('upcoming:') >= 0) {
 							this.tagged = true;
-							this.event_id = tag.replace('upcoming:','');
+							this.event_id = tag.replace('upcoming:','').replace(':','=');
 						}
 					}
 			}
@@ -333,6 +368,7 @@ var UPCOMING_API_URL = 'http://upcoming.yahooapis.com/services/rest/';
 
 		eventInfoReceived: function(rsp,div) {
 			var event = rsp.event;
+			if(event != undefined) {
 			this.events[event.@id] = {id:event.@id,
 									  username:event.@username,
 									  status:event.@status,
@@ -354,6 +390,7 @@ var UPCOMING_API_URL = 'http://upcoming.yahooapis.com/services/rest/';
 									  geocoding_ambiguous: event.@geocoding_ambiguous
 			};
 			this.displayEventInfo(div);
+			} else M8_log(event);
 		},
 
 		

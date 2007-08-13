@@ -124,7 +124,7 @@
 
 	//**********************************************************************
 
-// TJPzoom 3 * JÃ¡nos PÃ¡l TÃ³th
+// TJPzoom 3 * János Pál Tóth
 // 2007.05.18
 // Docs @ http://valid.tjp.hu/tjpzoom/ 
 // News @ http://tjpzoom.blogspot.com/
@@ -354,7 +354,7 @@ function TJPhandlemouse(evt,obj) {
 }
 
 
-// TJPzoom 3 * JÃ¡nos PÃ¡l TÃ³th
+// TJPzoom 3 * János Pál Tóth
 // Docs @ http://valid.tjp.hu/tjpzoom/ 
 // News @ http://tjpzoom.blogspot.com/
 
@@ -477,7 +477,7 @@ TJPinit();
 
 
 
-// TJPzoom 3 * Jï¿½nos Pï¿½l Tï¿½th
+// TJPzoom 3 * J�nos P�l T�th
 // Docs @ http://valid.tjp.hu/tjpzoom/ 
 // News @ http://tjpzoom.blogspot.com/
 

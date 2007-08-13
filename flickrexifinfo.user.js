@@ -8,7 +8,7 @@
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos/*/*
 // @include http://*flickr.com/photo_exif.gne?id=*
-// 
+// @exclude http://*flickr.com/photos/organize*
 // ==/UserScript==
 
 // --------------------------------------------------------------------

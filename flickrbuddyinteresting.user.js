@@ -2,10 +2,11 @@
 // @name	Flickr Buddy Interesting
 // @namespace	http://6v8.gamboni.org/
 // @description Quick access to user's interesting photos from the Buddy Icon Menu
-// @version        0.1
+// @version        0.3
 // @identifier	http://6v8.gamboni.org/IMG/js/flickrbuddyinteresting.user.js
-// @date           2007-03-16
+// @date           2007-06-26
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
+// @contributor    Stephen Fernandez ( http://steeev.freehostia.com )
 // @include http://*flickr.com*
 // ==/UserScript==
 
@@ -48,11 +49,91 @@
 		namespace: "http://6v8.gamboni.org/",
 		description: "Quick access to user's interesting photos from the Buddy Icon Menu",
 		identifier: "http://6v8.gamboni.org/IMG/js/flickrbuddyinteresting.user.js",
-		version: "0.1",								// version
-		date: (new Date("2007-03-16"))		// update date
+		version: "0.3",								// version
+		date: (new Date("2007-06-26"))		// update date
 		.valueOf()
 	};
+
 	
+	function $x1(xpath) {
+		return document.evaluate(
+								 xpath,
+								 document,
+								 null,
+								 XPathResult.FIRST_ORDERED_NODE_TYPE, null
+								 ).singleNodeValue;
+	}
+
+
+	/***********************************************************************
+	 * Flickr Localisation
+	 **********************************************************************/
+
+	var FlickrLocaliser = function(locals) {
+		this.init(locals);
+	}
+	FlickrLocaliser.prototype = {
+		selectedLang: undefined,
+		localisations: undefined,
+		getLanguage: function() {
+			if(!this.selectedLang) {
+				var langA = $x1("//p[@class='LanguageSelector']//a[contains(@class,'selected')]");
+				if(langA) {
+					var matches = /\/change_language.gne\?lang=([^&]+)&.*/.exec(langA.href);
+					if(matches && matches[1]) {
+						this.selectedLang = matches[1];
+						return this.selectedLang;
+					}
+				}
+				return false;
+			} else return this.selectedLang;
+		},
+
+		init: function(locals) {
+			this.localisations = locals;
+		},
+
+		localise: function(string, params) {
+			if(this.localisations && this.getLanguage()) {
+				var currentLang = this.localisations[this.selectedLang];
+				if(!currentLang) currentLang = this.localisations[this.localisations.defaultLang];
+				var local = currentLang[string];
+				if(!local) {
+					local = this.localisations[this.localisations.defaultLang][string];
+				} 
+				if(!local) return string;
+				for(arg in params) {
+					var rep = new RegExp('@'+arg+'@','g');
+					local = local.replace(rep,params[arg]);
+				}
+				local =local.replace(/@[^@]+@/g,'');
+				return local;
+			} else return undefined;
+		}
+
+	}
+
+	/*****************************Flickr Localisation**********************/
+
+	
+	var localiser =  new FlickrLocaliser({
+			'en-us' : {
+				'pool_interesting' : 'Pool Interestingness',
+				'quick_interesting' : 'Quick Interestingness',
+				'close' : 'Close'
+			},
+			'fr-fr' : {
+				'pool_interesting' : 'Interestingness du Groupe',
+				'quick_interesting' : 'Interestingness Rapide',
+				'close' : 'Fermer'				
+			},
+			'it-it' : {
+				'pool_interesting' : 'Interestingness del Gruppo',
+				'quick_interesting' : 'Interestingness Rapida',
+				'close' : 'Chiudi'
+			},
+			defaultLang: 'en-us'
+		});
 	
 	function M8_log() {
 		if(unsafeWindow.console)
@@ -64,7 +145,7 @@
 	/*
 	  Xpath trickery, from:
 	  http://ecmanaut.blogspot.com/2006/07/expressive-user-scripts-with-xpath-and.html
-	 */
+	*/
 	function $x( xpath, root )
 		{
 			var doc = root ? root.evaluate?root:root.ownerDocument : document;
@@ -75,15 +156,6 @@
 			return result;
 		}
 
-
-	function $x1(xpath) {
-		return document.evaluate(
-								 xpath,
-								 document,
-								 null,
-								 XPathResult.FIRST_ORDERED_NODE_TYPE, null
-								 ).singleNodeValue;
-	}
 
 	function foreach( xpath, cb, root )
 	{
@@ -161,19 +233,31 @@
 	var flickrbuddyinteresting = function() {this.init();}
 
 	flickrbuddyinteresting.prototype = {
-
 		init: function() {
-			  var menu = document.getElementById('personmenu_contacts_link');
-			  if(menu) {
-				  var link =document.createElement('a');
-				  link.setAttribute('class','block');
-				  link.setAttribute('id','tag_person_link');
-				  link.setAttribute('href','javascript:;');
-				  link.addEventListener('click',getObjectMethodClosure(this,'showInteresting'),true);
-				  link.textContent='Quick Interestingness';
+			var menu = document.getElementById('personmenu_contacts_link');
+			if(menu) {
+				var link =document.createElement('a');
+				link.setAttribute('class','block');
+				link.setAttribute('id','tag_person_link');
+				link.setAttribute('href','javascript:;');
+				link.addEventListener('click',getObjectMethodClosure(this,'showInteresting'),true);
+				link.textContent=localiser.localise('quick_interesting');
 			  
-				  menu.parentNode.insertBefore(link,menu.nextSibling);
-			  }
+				menu.parentNode.insertBefore(link,menu.nextSibling);
+			}
+
+ 			if(document.location.href.match(/\/groups\//) && unsafeWindow.document.getElementById('SubNav')) {
+				psi=$x1('//p[@class="Links"]');
+				psi.innerHTML+=' <img src="/images/subnavi_dots.gif" alt="" height="11" width="1"> ';
+				var link =document.createElement('a');
+				link.setAttribute('class','block');;
+				link.setAttribute('href','javascript:;');
+				link.addEventListener('click',getObjectMethodClosure(this,'showInteresting'),true);
+				link.textContent=localiser.localise('pool_interesting');
+				psi.appendChild(link);
+
+			}
+
 		},
 		
 		showInteresting: function(ev) {
@@ -184,8 +268,8 @@
 			boxEle.className = 'popup';
 			// create something to act as a close button
 			btnClose = document.createElement('a');
-			btnClose.href='#';
-			btnClose.innerHTML='Close';
+			btnClose.href='javascript:;';
+			btnClose.innerHTML=localiser.localise('close');
 			// add close button to block element
 			boxEle.appendChild(btnClose);
 			// create box with block element
@@ -197,12 +281,12 @@
 			boxEle.style.backgroundColor = '#333';
 			// attach close event and add your own code
 			btnClose.addEventListener('click',function(){
-				// you have to pass box object into event
-				// because of the js event scoping
-				lwBox.Close(lwBox);
-				// false to cancel link
-				return false;
-			},true);
+					// you have to pass box object into event
+					// because of the js event scoping
+					lwBox.Close(lwBox);
+					// false to cancel link
+					return false;
+				},true);
 			btnClose.setAttribute('style','background-color:#CCC;');
 			
 			ul.setAttribute('style','margin:0;padding:0;list-style-type:none;');
@@ -217,13 +301,13 @@
 							var html = '';
 							for(i=0;i<rsp.photos.photo.length;i++) {
 								var photo = rsp.photos.photo[i];
-								html += '<li style="margin:0;padding:0;display:inline;"><a href="http://www.flickr.com/photos/'+photo.owner+'/'+photo.id+'/"><img src="http://farm'+photo.farm+'.static.flickr.com/'+photo.server+'/'+photo.id+'_'+photo.secret+'_s.jpg" width="75" height="75"/></a></li>';
+								html += '<li style="margin:0;padding:0;display:inline;"><a href="http://www.flickr.com/photos/'+photo.owner+'/'+photo.id+'/"><img title="&quot;' + photo.title + '&quot; by ' +  photo.ownername + '" src="http://farm'+photo.farm+'.static.flickr.com/'+photo.server+'/'+photo.id+'_'+photo.secret+'_s.jpg" width="75" height="75"/></a></li>';
 							}
 							ul.innerHTML = html;
-			// render it!
-			lwBox.Render();
+							// render it!
+							lwBox.Render();
 						} else
-						M8_log("Error2 "+responseText);							
+							M8_log("Error2 "+responseText);							
 					} catch (e) {
 						M8_log("Error1 "+responseText);
 						M8_log(e);
@@ -233,24 +317,32 @@
 
 			var block = ev.target.parentNode;
 			var matches = /messages_write\.gne\?to=([^"]*)"/.exec(block.innerHTML);
-			if(matches) 
-			unsafeWindow.F.API.callMethod('flickr.photos.search', {
-				user_id: matches[1], sort: 'interestingness-desc', page:1, per_page: 25,
-							  format: 'json'
-							  }, listener);	
-		}
-	}
-	//======================================================================
-	// launch
-	try {
-		window.addEventListener("load", function () {
-									try {
+													 if(matches)
+														 unsafeWindow.F.API.callMethod('flickr.photos.search', {
+																 user_id: matches[1], sort: 'interestingness-desc', page:1, per_page: 25,
+																	 format: 'json', extras: 'owner_name'
+																	 }, listener);	
+
+													 if(ev.target.textContent==localiser.localise('pool_interesting')) {
+														 thegroupid=unsafeWindow.document.getElementById('SubNav').innerHTML.split('\/buddyicons\/')[1].split('\.jpg')[0];
+														 unsafeWindow.F.API.callMethod('flickr.photos.search', {
+																 group_id: thegroupid , sort: 'interestingness-desc', page:1, per_page: 25,
+																	 format: 'json', extras: 'owner_name'
+																	 }, listener);	
+													 }
+													 }
+													}
+			//======================================================================
+			// launch
+			try {
+				window.addEventListener("load", function () {
+						try {
 										
-										// update automatically (http://userscripts.org/scripts/show/2296)
-										win.UserScriptUpdates.requestAutomaticUpdates(SCRIPT);
-									} catch (ex) {} 
+							// update automatically (http://userscripts.org/scripts/show/2296)
+							win.UserScriptUpdates.requestAutomaticUpdates(SCRIPT);
+						} catch (ex) {} 
 									
-									var flickrgp = new flickrbuddyinteresting();
-		}, false);
-	} catch (ex) {}
-})();
+						var flickrgp = new flickrbuddyinteresting();
+					}, false);
+			} catch (ex) {}
+		})();
