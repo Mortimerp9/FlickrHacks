@@ -19,8 +19,12 @@ access and clone it using git or the web interface. If you want to
 "push" commits to the public repository, contact me and I'll add you
 to the developer list, or just send me formatted patches by email.
 
-Currently, there is a quite flat structure: _greasemonkey_/ .... (all
-the scripts are here).
+Currently, there is a quite flat structure: 
+
+_greasemonkey_/ 
+   .... (all the user scripts are here).
+_greasemonkey_tools_/
+   .... (toolkits to help develop greasemonkey scripts for flickr)
 
 there could be other categories of development, we'll see.
 
