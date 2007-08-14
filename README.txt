@@ -23,3 +23,6 @@ Currently, there is a quite flat structure: _greasemonkey_/ .... (all
 the scripts are here).
 
 there could be other categories of development, we'll see.
+
+See the discussion topic:
+http://flickr.com/groups/flickrhacks/discuss/72157601429332744/
