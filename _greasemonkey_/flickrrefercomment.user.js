@@ -2,9 +2,9 @@
 // @name	Flickr Refer Comment
 // @namespace	http://6v8.gamboni.org/
 // @description Auto comment the place where you come from
-// @version        1.0
+// @version        1.1
 // @identifier	http://6v8.gamboni.org/IMG/js/flickrrefercomment.user.js
-// @date           2006-11-30
+// @date           2007-11-23
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos/*/*
 // @exclude http://*flickr.com/photos/*/*#preview
@@ -50,8 +50,8 @@
 		namespace: "http://6v8.gamboni.org/",
 		description: "auto comment the place where you come from",
 		identifier: "http://6v8.gamboni.org/IMG/js/flickrrefercomment.user.js",
-		version: "1.0",								// version
-		date: (new Date(2006, 11, 30))		// update date
+		version: "1.1",								// version
+		date: (new Date(2007, 11, 23))		// update date
 		.valueOf()
 	};
 
