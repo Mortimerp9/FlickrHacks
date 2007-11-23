@@ -134,6 +134,16 @@
 					} else if(referrer.indexOf('/map') >= 0) {
 						//we come from one of the maps
 						this.insertComment("Seen on a map.",referrer);
+					} 
+				// Modifications by: Marcos Kuhns (http://www.kuhnsfam.com/)
+					else if(referrer.indexOf('/places') >= 0) {
+						//we come from places
+						matches = /\/places\/(([^\/]+)\/?)*/.exec(referrer);
+						if(matches && matches[2]) {
+							this.insertComment("Seen on photos taken in "+decodeURI(matches[2]).replace('+', ' ')+".",referrer);
+						} else {
+							this.insertComment("Seen on the places page.",referrer);
+						}
 					} else if(referrer.indexOf('/interesting') >= 0 && referrer.indexOf('/explore') >= 0) {
 						//we come from one of the interesting calendar
 						this.insertComment("Seen in the interestingness archives.",referrer);
