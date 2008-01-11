@@ -2,9 +2,9 @@
 // @name	Flickr Refer Comment
 // @namespace	http://6v8.gamboni.org/
 // @description Auto comment the place where you come from
-// @version        1.2
+// @version        1.3
 // @identifier	http://6v8.gamboni.org/IMG/js/flickrrefercomment.user.js
-// @date           2008-01-05
+// @date           2008-01-11
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos/*/*
 // @exclude http://*flickr.com/photos/*/*#preview
@@ -50,8 +50,8 @@
 		namespace: "http://6v8.gamboni.org/",
 		description: "auto comment the place where you come from",
 		identifier: "http://6v8.gamboni.org/IMG/js/flickrrefercomment.user.js",
-		version: "1.2",								// version
-		date: (new Date(2008, 01, 05))		// update date
+		version: "1.3",								// version
+		date: (new Date(2008, 01, 11))		// update date
 		.valueOf()
 	};
 
@@ -145,6 +145,13 @@
 							this.insertComment("Seen on photos taken in "+decodeURI(matches[2]).replace('+', ' ')+".",referrer);
 						} else {
 							this.insertComment("Seen on the places page.",referrer);
+						}
+					} else if(referrer.indexOf('/cameras') >= 0) {
+						matches = /\/cameras\/([^\/]+)\/([^\/]+)\/?/.exec(referrer);
+						if(matches && matches.length > 1) {
+							var make = matches[1].replace(/_/g,' ');
+							var model = matches[2].replace(/_/g,' ');
+							this.insertComment("Seen on the "+make+" "+model+" camera finder.");
 						}
 					} else if(referrer.indexOf('/interesting') >= 0 && referrer.indexOf('/explore') >= 0) {
 						//we come from one of the interesting calendar
