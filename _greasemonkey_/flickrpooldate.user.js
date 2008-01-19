@@ -2,9 +2,9 @@
 // @name	 Flickr Pool Date
 // @namespace	http://6v8.gamboni.org/
 // @description Show when the photo was added to the group pool
-// @version        0.4
+// @version        0.5
 // @identifier	http://6v8.gamboni.org/IMG/js/flickrpooldate.user.user.js
-// @date           2006-10-06
+// @date           2008-01-19
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/groups/*/pool*
 // 
@@ -49,8 +49,8 @@
 		namespace: "http://6v8.gamboni.org/",
 		description: "Show when the photo was added to the group pool",
 		identifier: "http://6v8.gamboni.org/IMG/js/flickrpooldate.user.user.js",
-		version: "0.4",								// version
-		date: (new Date("2006-10-06"))		// update date
+		version: "0.5",								// version
+		date: (new Date("2008-01-19"))		// update date
 		.valueOf()
 	};
 
@@ -97,7 +97,6 @@
 			unsafeWindow.F.API.callMethod('flickr.urls.lookupGroup', {
 				url:document.location				   
 			}, listener);
-			
 			this.waitForGroupId();
 		},
 
@@ -163,7 +162,7 @@
 
 		insertDates: function(photos) {
 				var images = document.evaluate(
-											 "//div/p[contains(@class,'PoolList')]/a/img",
+											 "//div/p[contains(@class,'PoolList')]//a/img",
 										  document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null); 
 				for(var i = 0; i < images.snapshotLength; i++) {  
 					var image = images.snapshotItem(i);
