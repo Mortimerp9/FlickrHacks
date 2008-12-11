@@ -7,21 +7,20 @@
 // @name	Flickr Auto Page
 // @namespace	http://6v8.gamboni.org/Flickr-Auto-Pagination.html
 // @description removes the need to paginate when browsing flickr
-// @version        1.2
-// @date           2008-11-30
+// @version        0.99
+// @date           2007-07-22
 // @creator        Pierre Andrews (mortimer.pa@free.fr) , pt translation by Perla* <http://www.flickr.com/photos/bobnperla/>
 // @include http://*flickr.com/groups/*/pool*
-// @include http://*flickr.com/groups/*/admin*
+// @include http://*flickr.com/groups/*/admin
 // @include http://*flickr.com/groups/*/discuss*
 // @include http://*flickr.com/photos/*/*
 // @include http://*flickr.com/photos/*/*/sets/*/detail*
 // @include http://*flickr.com/recent_activity.gne*
-// @include http://*flickr.com/activity*
 // @include http://*flickr.com/photos_comments.gne*
 // @include http://*flickr.com/search*
 // @include http://*flickr.com/photos/friends*
 // @include http://*flickr.com/help/forum*
-// @include http://*flickr.com/explore/interesting/*
+// @include http://*flickr.com/explore/intersting/*
 // @include http://*flickr.com/people/*/contacts*
 // @include http://*flickr.com/creativecommons/*
 // @include http://*flickr.com/groups_members_detail.gne*
@@ -34,6 +33,11 @@
 
 (function () {
 
+	var THRESHOLD = 340;
+	if(matches = /\/photos\/friends\/?(page([0-9]+))?\/?$/.exec(document.location.pathname)) {
+		THRESHOLD = 100;
+	}
+
 	var win = window;
 
 	//update information
@@ -43,8 +47,8 @@
 		description: "removes the need to paginate when browsing flickr.",
 		source: "http://6v8.gamboni.org/Flickr-Auto-Page.html",			// script homepage/description URL
 		identifier: "http://6v8.gamboni.org/IMG/js/flickrautopage.user.js",
-		version: "1.2",								// version
-		date: (new Date(2008, 11, 30))		// update date
+		version: "0.99",								// version
+		date: (new Date(2007, 07,22))		// update date
 		.valueOf()
 	};
 
@@ -54,29 +58,29 @@
 
 	function getObjectMethodClosure3(object, method,args,args1,args2,args3) {
 		return function() {
-			return object[method](args,args1,args2,args3);
+			return object[method](args,args1,args2,args3); 
 		}
 	}
 	function getObjectMethodClosure2(object, method,args,args1,args2) {
 		return function() {
-			return object[method](args,args1,args2);
+			return object[method](args,args1,args2); 
 		}
 	}
 	function getObjectMethodClosure1(object, method,args,args1) {
 		return function() {
-			return object[method](args,args1);
+			return object[method](args,args1); 
 		}
 	}
 
 	function getObjectMethodClosure0(object, method,args) {
 		return function() {
-			return object[method](args);
+			return object[method](args); 
 		}
 	}
 
 	function getObjectMethodClosure(object, method) {
 		return function(args) {
-			return object[method](args);
+			return object[method](args); 
 		}
 	}
 
@@ -148,7 +152,7 @@
 				var local = currentLang[string];
 				if(!local) {
 					local = this.localisations[this.localisations.defaultLang][string];
-				}
+				} 
 				if(!local) return string;
 				for(arg in params) {
 					var rep = new RegExp('@'+arg+'@','g');
@@ -167,9 +171,9 @@
 
 	function M8_log() {
 	  if(unsafeWindow.console)
-		  unsafeWindow.console.log(arguments);
+	  unsafeWindow.console.log(arguments);
 	  else
-		  GM_log(arguments);
+	  GM_log(arguments);
 	}
 
 	win.FlickrAutoPage = function() {
@@ -218,7 +222,7 @@
 					// S
 					'showing' : 'Mostrando a p&aacute;gina:@page@/@total@.'
 				},
-
+				
 				defaultLang:'en-us'
 		}),
 		next_request:1,
@@ -231,19 +235,10 @@
 		watch_cb: undefined,
 		stop_watch: false,
 
-		findTotalPage: function(string) {
-			var nbr = 0;
-			while(matches = /([0-9, '.]+)/g.exec(string)) {
-				var x = parseInt(matches[1].replace(',',''));
-				if(x > nbr) nbr = x;
-			}
-			M8_log("ttpg: "+nbr);
-			return nbr;
-		},
 
 		//inspired by http://squarefree.com/userscripts
 		//using iframes instead of xmlhttpRequest applies javascripts and other GM scripts to the page :D
-		pullMore: function(url,processReply, special) {
+		pullMore: function(url,processReply, special) {  
 			var iframe = document.createElement("iframe");
 			var self = this;
 			iframe.width = 1;
@@ -251,20 +246,21 @@
 			iframe.style.display = "none";
 			iframe.id = 'autopageframe';
 			document.body.appendChild(iframe);
-			iframe.addEventListener("load",
+			iframe.addEventListener("load", 
 									function(){
 				self.msg_div.innerHTML = '';
-
+				
 				if(url.indexOf('photos/friends') >= 0) self.insert.innerHTML += '<br clear="all" />';
-
+				
 				if(self.insert) {
 					var anchor = self.insert.appendChild(document.createElement('a'));
 					anchor.name = 'infinitepage'+(self.next_request-1);
 				}
 				var b = iframe.contentDocument.body;
+
 				//self.insert.innerHTML =
 				processReply(b, self.insert);
-
+				
 				self.received = true;
 				var link;
 				switch(special) {
@@ -292,7 +288,9 @@
 					link.className += 'this-page';
 				}
 				self.first = false;
-
+				
+				if(matches = /\/photos\/friends\/?(page([0-9]+))?\/?$/.exec(document.location.pathname))
+					document.location.hash = 'infinitepage'+(self.next_request-1);
 				//get rid of iframe
 				setTimeout( function() { iframe.parentNode.removeChild(iframe); }, 1500);
 			}, false);
@@ -301,20 +299,20 @@
 
 		cb_shortcut: function(url,msg,processReply,special) {
 			if(this.received) {
-				if(this.next_request > this.nbr_page) {
+				if(this.next_request > this.nbr_page) {							
 					this.msg_div.innerHTML = self.localiser.localise('showing',{'page':(self.next_request-1),'total':self.nbr_page})+' '+msg;
 				} else if(this.insert) {
 					this.next_request++;
-					var self = this;
+					var self = this; 
 					M8_log('get'+url);
 					this.msg_div.innerHTML = this.localiser.localise('loading',{
 						'nbrpage':(this.next_request-1),
 						'total': this.nbr_page
 					})+ '<br/><img id="flickrphotocompass_wait" src="http://'+document.location.host+'/images/pulser2.gif" style="margin:0;padding:0;margin-right:4px;border:0px #ffffff;height: 16px;" />';
-					this.received = false;
+					this.received = false;						
 					this.pullMore(url,processReply,special);
 				}
-
+				
 			}
 		},
 
@@ -324,10 +322,12 @@
 			var processReply = function(body,insert) {
 				//move the elements
 				var cnt = 0;
+
 				foreach(xpath,
 						function(elt) {
 							cnt++;
-							insert.appendChild(elt);
+							var node = document.importNode(elt,true);
+							insert.appendChild(node);
 							elt.className += ' AutoPageAddition'+self.next_request;
 						},
 						body
@@ -348,7 +348,7 @@
 							var hover;
 							var hover_insert = document.getElementById("person_hover_link")
 								if(!document.getElementById('hover_img'+nsid) && (hover = body.ownerDocument.getElementById('hover_img'+nsid))) {
-								hover_insert.appendChild(hover);
+								hover_insert.appendChild(hover);								
 							}
 						},document);
 				additionalBits("AutoPageAddition"+self.next_request,body);
@@ -363,8 +363,8 @@
 			var processReply = function(text,html) {
 				var start = 0;
 				var end = 0;
-
-
+				
+				
 				start = text.indexOf('<table id="InBox" cellspacing="0" width="100%">');
 				start+=47;
 				end = text.indexOf('</table>',start);
@@ -377,7 +377,7 @@
 			},*/
 
 
-		init: function() {
+		init: function() {	
 			var matches;
 			var cb = undefined;
 			var msg;
@@ -385,10 +385,10 @@
 			var xpath;
 			var special = 0;
 			var additionalBits = function() {};
-
+			
 			//for the group pool
 			if(matches = /\/groups\/(.*)\/pool\/?(page([0-9]+))?\/?$/.exec(document.location.pathname)) {
-
+				
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
 				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/30);
@@ -400,15 +400,15 @@
 				xpath = "//div[@class='HoldPhotos']/p";
 			}  //for the group discuss
 			else if(matches = /\/groups\/(.*)\/discuss\/?(page([0-9]+))?\/?$/.exec(document.location.pathname)) {
-
+				
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
 				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/20);
 
 				if(matches[3]) this.next_request= parseInt(matches[3]);
 				this.insert = $x1("//table[@class='TopicListing']/tbody");
-
-				url = "http://"+document.location.host+"/groups/"+matches[1]+"/discuss/page@P@";
+				
+				url = "http://"+document.location.host+"/groups/"+matches[1]+"/discuss/page@P@";	
 				msg = this.localiser.localise('nodiscussion');
 				xpath = "//table[@class='TopicListing']/tbody/tr";
 			} //for the group topics
@@ -461,12 +461,13 @@
 
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
 				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/20);
-				if(matches[2]) this.next_request= parseInt(matches[2]);
-				      this.insert = $x1("//table[@class='TopicListing']/tbody");
+
+				this.insert = $x1("//table[@class='TopicListing'][2]/tbody");
+				if(matches[3]) this.next_request= parseInt(matches[2]);
 				msg = this.localiser.localise('noreply');
-				url = "http://"+document.location.host+"/help/forum/"+lang+"/?page=@P@";
-				  xpath = "//table[@class='TopicListing']/tbody/tr";
-			} //for the contacts photo
+				url = "http://"+document.location.host+"/help/forum/"+lang+"/?page=@P@";	
+				xpath = "//table[@class='TopicListing']/tbody/tr";
+			} //for the contacts photo 
 			else if(matches = /\/photos\/friends\/?(page([0-9]+))?\/?$/.exec(document.location.pathname)) {
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
@@ -479,7 +480,7 @@
 				msg = this.localiser.localise('nophoto');
 			} //for everyone's tag
 			else if(matches = /\/photos\/tags\/([^\/]+)\/?(interesting)?\/?$/.exec(document.location.pathname)) {
-
+				
 				var matches2 = /\?page=([0-9]+)$/.exec(document.location.search);
 
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
@@ -502,12 +503,13 @@
 
 				if(matches[3]) this.next_request= parseInt(matches[3]);
 				this.insert = $x1("//div[@id='tagThumbs']");
+				M8_log(this.insert);
 				url = "http://"+document.location.host+"/photos/tags/"+matches[1]+"/clusters/"+matches[2]+"/page@P@";
 				msg = this.localiser.localise('nophoto');
 				xpath = "//div[@id='tagThumbs']/p";
 			} //for user's tag
 			else if(matches = /\/photos\/([^\/]+)\/tags\/([^\/]+)\/?(page([0-9]+))?\/?$/.exec(document.location.pathname)) {
-
+				
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
 				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/20);
@@ -519,7 +521,7 @@
 				xpath = "//td[@id='GoodStuff']/div/p";
 			}   //for interesting-popular page
 			else if(matches = /\/photos\/([^\/]+)\/popular-interesting\/?(page([0-9]+))?\/?$/.exec(document.location.pathname)) {
-
+				
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
 				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/20);
@@ -532,7 +534,7 @@
 				xpath = "//table[@class='PopularPic']/tbody/tr";
 			}   //for popular-view page
 			else if(matches = /\/photos\/([^\/]+)\/popular-views\/?(page([0-9]+))?\/?$/.exec(document.location.pathname)) {
-
+				
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
 				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/20);
@@ -544,7 +546,7 @@
 				xpath = "//table[@class='PopularPic']/tbody/tr";
 			}  //for popular-comments page
 			else if(matches = /\/photos\/([^\/]+)\/popular-comments\/?(page([0-9]+))?\/?$/.exec(document.location.pathname)) {
-
+				
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
 				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/20);
@@ -557,7 +559,7 @@
 				xpath = "//table[@class='PopularPic']/tbody/tr";
 			}  //for popular-faves page
 			else if(matches = /\/photos\/([^\/]+)\/popular-faves\/?(page([0-9]+))?\/?$/.exec(document.location.pathname)) {
-
+				
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
 				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/20);
@@ -567,9 +569,9 @@
 				url = "http://"+document.location.host+"/photos/"+matches[1]+"/popular-faves/page@P@";
 				msg = this.localiser.localise('nophoto');
 				xpath = "//table[@class='PopularPic']/tbody/tr";
-			} //for comments on a photo
+			} //for comments on a photo 
 			else if(unsafeWindow.page_photo_id) {
-
+				
 				special = 3;
 				var otherpage = $x1("//div[@id='DiscussPhoto']/div[@class='Pages']/div[@class='Paginator']");
 				if(otherpage) {
@@ -590,7 +592,7 @@
 				xpath = "//div[@id='DiscussPhoto']/table/tbody/tr";
 				url = "http://"+document.location.host+unsafeWindow.global_photos[unsafeWindow.page_photo_id].ownersUrl+unsafeWindow.page_photo_id+"/page@P@";
 
-			}  //for the user that faved a shot
+			}  //for the user that faved a shot 
 			else if(matches = /\/photos\/([^\/]+)\/([^\/]+)\/favorites\/?$/.exec(document.location.pathname)) {
 				var matches2 = /\?page=([0-9]+)$/.exec(document.location.search);
 
@@ -604,7 +606,7 @@
 				msg = this.localiser.localise('nopeople');
 				url = "http://"+document.location.host+matches[0]+"/?page=@P@";
 				xpath = "//table[@id='InBox']/tbody/tr";
-			} //for the user stream
+			} //for the user stream 
 			else if(matches = /\/photos\/([^\/]+)\/?(page([0-9]+))?\/?$/.exec(document.location.pathname)) {
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
@@ -658,12 +660,12 @@
 				}
 			}//for set details
 			else if(matches = /\/photos\/([^\/]+)\/sets\/([^\/]+)\/detail\/?$/.exec(document.location.pathname)) {
-
+				
 				var matches2 = /\?page=([0-9]+)$/.exec(document.location.search);
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
 				var tot = this.findTotalPage(pp.innerHTML);
-				if(tot > 40)
+				if(tot > 40) 
 					this.nbr_page = Math.ceil(tot/18);
 				else
 					this.nbr_page = Math.ceil(tot/20);
@@ -708,7 +710,7 @@
 
 			} //for set thumbs
 			else if(matches = /\/photos\/([^\/]+)\/sets\/([^\/]+)\/?$/.exec(document.location.pathname)) {
-
+				
 				var matches2 = /\?page=([0-9]+)$/.exec(document.location.search);
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
@@ -718,25 +720,20 @@
 				this.insert = document.getElementById('setThumbs');
 				url = "http://"+document.location.host+"/photos/"+matches[1]+"/sets/"+matches[2]+"/?page=@P@";
 				msg = this.localiser.localise('nophoto');
-				xpath = "//div[@id='setThumbs']/div//a";
+				xpath = "//div[@id='setThumbs']/a";
 			}  //for comments on your photos
-			else if((document.location.pathname == '/recent_activity.gne') || (matches2 = /activity\/(replies|photostream|all|messages|customized)\/?(page([0-9]+))?\/?/.exec(document.location.pathname))) {
-			if(!matches2[2]) {
-			  matches = /(\?days=([0-9]+))?([?&]page=([0-9]+))?$/.exec(document.location.search);
-			  if(matches && matches[4]) this.next_request= parseInt(matches[4]);
-			} else{
-			  this.next_request= parseInt(matches2[3]);
-			}
-
+			else if(document.location.pathname == '/recent_activity.gne') {
+				matches = /(\?days=([0-9]+))?([?&]page=([0-9]+))?$/.exec(document.location.search);
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
-				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/25);
+				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/10);
 
-				this.insert = document.getElementById('recent-activity');
+				if(matches && matches[4]) this.next_request= parseInt(matches[4]);
+				this.insert = $x1("//table[@class='RecentActivity']/tbody");
 				msg = this.localiser.localise('nocomment');
-				url = "http://"+document.location.host+"/activity/"+matches2[1]+"/page@P@";
-				if(matches && parseInt(matches[2])>0) url += "&days="+matches[2];
-				xpath = "//li[contains(@class,'act-item')]";
+				url = "http://"+document.location.host+"/recent_activity.gne?page=@P@";
+				if(parseInt(matches[2])>0) url += "&days="+matches[2];
+				xpath = "//table[@class='RecentActivity']/tbody/tr";
 			} //for comments you've made
 			else if(document.location.pathname == '/photos_comments.gne') {
 				matches = /\?page=([0-9]+)$/.exec(document.location.search);
@@ -754,7 +751,7 @@
 			} //for people search
 			else if(document.location.pathname == '/search/people/') {
 				var reg = /[?&]page=([0-9]+)/g;
-
+				
 				var query;
 				var search = document.location.search;
 
@@ -777,7 +774,7 @@
 			}//for groups search
 			else if(document.location.pathname == '/search/groups/') {
 				var reg = /[?&]page=([0-9]+)/g;
-
+				
 				var query;
 				var search = document.location.search;
 
@@ -793,7 +790,7 @@
 						url = "http://"+document.location.host+"/search/groups/"+query+"&page=@P@";
 
 				if(query.indexOf('w=') >= 0) {
-					if(query.indexOf('m=pool') >= 0) {
+					if(query.indexOf('m=pool') >= 0) {				
 						msg = this.localiser.localise('nophoto');
 						this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/24);
 
@@ -819,7 +816,7 @@
 			}//for help topic search
 			else if(document.location.pathname == '/search/forum/') {
 				var reg = /[?&]page=([0-9]+)/g;
-
+				
 				var query;
 				var search = document.location.search;
 
@@ -841,7 +838,7 @@
 			}  //for photo search
 			else if(document.location.pathname == '/search/') {
 				var reg = /[?&]page=([0-9]+)/g;
-
+				
 				var query;
 				var search = document.location.search;
 
@@ -855,7 +852,7 @@
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
 				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/24);
-
+				
 
 				msg = this.localiser.localise('nophoto');
 				url = "http://"+document.location.host+"/search/"+query+"&page=@P@";
@@ -872,24 +869,26 @@
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
 				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/10);
-
+				
 				if(matches[3]) this.next_request= parseInt(matches[3]);
 				this.insert = $x1("//table[@class='DayView']/tbody");
 				msg = this.localiser.localise('nophoto');
 				url = "http://"+document.location.host+"/explore/interesting/"+matches[1]+"/page@P@";
 				xpath  ="//table[@class='DayView']/tbody/tr";
-			} //for the user favorites
+			} //for the user favorites 
 			else if(matches = /\/photos\/([^\/]+)\/favorites\/?(page([0-9]+))?\/?$/.exec(document.location.pathname)) {
-
+				
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
+
+
 				if(matches[3]) this.next_request= parseInt(matches[3]);
 				this.insert = document.getElementById('favoriteThumbs');
 				var type = 0;
 				var tot = this.findTotalPage(pp.innerHTML);
 				this.nbr_page = Math.ceil(tot/36);
 				url = "http://"+document.location.host+"/photos/"+matches[1]+"/favorites/page@P@";
-				xpath = "//div[@id='favoriteThumbs']/span"
+				xpath = "//div[@id='favoriteThumbs']/a"
 				msg = this.localiser.localise('nophoto');
 			} //for the list of contacts
 			else if(matches = /\/people\/([^\/]+)\/contacts\/?$/.exec(document.location.pathname)) {
@@ -908,8 +907,8 @@
 				var tot = this.findTotalPage(pp.innerHTML);
 				this.nbr_page = Math.ceil(tot/30);
 
-
-
+				
+				
 				url = "http://"+document.location.host+"/people/"+matches[1]+"/contacts/"+query+"page=@P@";
 				msg = this.localiser.localise('nocontacts');
 				xpath = "//table[@class='PeopleResults']/tbody/tr";
@@ -923,7 +922,7 @@
 				this.insert = $x1("//table[@class='PeopleResults']/tbody");
 				var tot = this.findTotalPage(pp.innerHTML);
 				this.nbr_page = Math.ceil(tot/40);
-
+				
 				url = "http://"+document.location.host+"/people/"+matches[1]+"/contacts/rev/?page=@P@";
 				msg = this.localiser.localise('nocontacts');
 				xpath = "//table[@class='PeopleResults']/tbody/tr";
@@ -936,7 +935,7 @@
 				this.insert = $x1("//div[@class='RecentPhotos']");
 				var tot = this.findTotalPage(pp.innerHTML);
 				this.nbr_page = Math.ceil(tot/24);
-
+				
 				url = "http://"+document.location.host+"/creativecommons/"+matches[1]+"/page@P@";
 				msg = this.localiser.localise('nocontacts');
 				xpath = "//div[@class='RecentPhotos']/p";
@@ -949,7 +948,7 @@
 				if(matches2 && matches2[1]) this.next_request= parseInt(matches2[1]);
 				var tot = this.findTotalPage(pp.innerHTML);
 				this.nbr_page = Math.ceil(tot/30);
-
+				
 				url = "http://"+document.location.host+"/groups_members_detail.gne"+document.location.search+"&page=@P@";
 				if(matches2) url.replace(matches2[0],'')
 				msg = this.localiser.localise('nocontacts');
@@ -958,7 +957,7 @@
 				cb = function() {
 					var curl = url.replace('@P@',self.next_request);
 					if(self.received) {
-						if(self.next_request > self.nbr_page) {
+						if(self.next_request > self.nbr_page) {							
 							self.msg_div.innerHTML = self.localiser.localise('showing',{'page':(self.next_request-1),'total':self.nbr_page})+' '+msg;
 						} else {
 							if(insertBefore) {
@@ -981,42 +980,7 @@
 					}
 				}
 
-			}//for admin page
-			  else if(matches = /\/groups\/([^\/]*)\/admin\/admins\/?/.exec(document.location.pathname)) {
-				var matches2 = /\?page=([0-9]+)$/.exec(document.location.search);
-
-				if(matches2) this.next_request= parseInt(matches[2]);
-
-
-				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
-				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
-				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/25);
-
-
-				msg = this.localiser.localise('nopeople');
-				url = "http://"+document.location.host+"/groups/"+matches[1]+"/admin/admins/?page=@P@";
-
-				this.insert = $x1("//div[@class='MembersList']");
-				xpath = "//p[@class='Person']";
-			} //for admin page
-			else if(matches = /\/groups\/([^\/]*)\/admin\/(members|moderators)\/?/.exec(document.location.pathname)) {
-			  var matches2 = /\?page=([0-9]+)$/.exec(document.location.search);
-
-				if(matches2) this.next_request= parseInt(matches[2]);
-
-				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
-				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
-				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/25);
-
-
-				msg = this.localiser.localise('nopeople');
-				url = "http://"+document.location.host+"/groups/"+matches[1]+"/admin/"+matches[2]+"/?page=@P@";
-
-				this.insert = document.getElementById('MemberList');
-				xpath = "id('MemberList')/tbody/tr";
-			}
-
-
+			} 
 
 			//for FlickrMail
 			/*	else if(document.location.pathname == '/messages.gne') {
@@ -1024,7 +988,7 @@
 				this.paginator = $x1("//div[@class='Pages']/div[@class='Paginator']");
 				var pp = $x1("//div[@class='Pages']/div[@class='Results']");
 				this.nbr_page = Math.ceil(this.findTotalPage(pp.innerHTML)/20);
-
+				
 				if(matches && matches[1]) this.next_request= parseInt(matches[1]);
 				this.insert = document.getElementById('InBox');
 				if(this.paginator) {
@@ -1044,7 +1008,7 @@
 					checkbox.checked = true;
 					checkbox.type = 'checkbox';
 					var self = this;
-					checkbox.addEventListener('click',function() {
+					checkbox.addEventListener('CheckboxStateChange',function() {
 												  if(checkbox.checked) {
 													  setTimeout(self.watch_cb,100);
 													  self.stop_watch = false;
@@ -1053,7 +1017,7 @@
 												  }
 											  },true);
 					checkboxDiv.appendChild(checkbox);
-					var label = checkboxDiv.appendChild(document.createElement('label'));
+										var label = checkboxDiv.appendChild(document.createElement('label'));
 					label.htmlFor = 'enableScroll';
 					label.innerHTML = this.localiser.localise('enable');
 					this.msg_div = this.paginator.appendChild(document.createElement('div'));
@@ -1061,7 +1025,8 @@
 				}
 
 				this.paginator.parentNode.setAttribute('style',
-													   'position:fixed;'+
+													   'position:absolute;'+
+													   'overflow: auto;'+
 													   'top:100px;'+
 													   'left:0;'+
 													   'width: 8em;'
@@ -1074,7 +1039,7 @@
 					new_link.innerHTML = this.next_request;
 					new_link.href='#infinitepage'+(this.next_request);
 					new_link.className += 'this-page';
-				}
+				} 
 				for(i=0;i<this.paginator.childNodes.length;i++) {
 					var item = this.paginator.childNodes.item(i);
 					if(item.nodeType == 1 && item != link && item.id != 'enableScrollContainer' && item != this.msg_div) {
@@ -1111,7 +1076,7 @@
 				setTimeout(this.watch_cb,100);
 			}
 		},
-
+		
 		//scroll watch code, from GoogleAutoPage:
 		//http://la.ma.la/misc/demo/googleautopager.htm
 		watch_scroll: function(cb,msg){
@@ -1120,16 +1085,27 @@
 				var wh = window.innerHeight ? window.innerHeight : document.body.clientHeight;
 				var total = (document.body.scrollHeight - wh);
 				var remain = total - sc;
-				if(remain < 600){
+				
+				if(remain < THRESHOLD){
 					cb();
 				}
 			}catch(e){
-
+				
 			}
 			if(this.next_request <= this.nbr_page+1) {
 				if(!this.stop_watch) setTimeout(getObjectMethodClosure1(this,'watch_scroll',cb,msg),100);
 			} else
 			this.msg_div.innerHTML = self.localiser.localise('showing',{'page':this.nbr_page,'total':this.nbr_page})+' '+msg;
+		},
+		
+		findTotalPage: function(string) {
+			var nbr = 0;
+			while(matches = /([0-9, '.]+)/g.exec(string)) {
+				var x = parseInt(matches[1].replace(',',''));
+				if(x > nbr) nbr = x;
+			}
+			M8_log(nbr);
+			return nbr;
 		}
 
 	};
@@ -1141,12 +1117,12 @@
 	try {
 		window.addEventListener("load", function () {
 									try {
-
+										
 										// update automatically (http://userscripts.org/scripts/show/2296)
 										unsafeWindow.UserScriptUpdates.requestAutomaticUpdates(SCRIPT);
-									} catch (ex) {}
+									} catch (ex) {} 
 										var flickrgp = new win.FlickrAutoPage();
-
+		
 
 								}, false);
 	} catch (ex) {}

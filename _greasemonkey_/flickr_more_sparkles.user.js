@@ -7,6 +7,11 @@
 // @date           2008-12-10
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include *flickr.com/photos/*
+// @include *flickr.com
+// @include *flickr.com/
+// @include *flickr.com/activity*
+// @include *flickr.com/photos/*
+// @include *flickr.com/photos/*/stats*
 // @exclude *flickr.com/photos/*/alltags*
 // @exclude *flickr.com/photos/organize*
 // ==/UserScript==
@@ -164,12 +169,14 @@
 									 defaultLang:'en-us'
 									   }),
 
-	  makeSpark: function(url, insert, withLink) {
+	  makeSpark: function(url, insert, withLink, fill,bg) {
 		  GM_xmlhttpRequest({
 			method:"GET",
 							  url:url,
+							  headers: { 'Cookie': document.cookie },
 							  onload:function(details) {
 								var start = details.responseText.indexOf("F.photoViews = {");
+								if(start >= 0) {
 								var end = details.responseText.indexOf("</script>",start);
 								var code = 	details.responseText.substring(start,end).replace("F.photoViews = {","").replace("foreGraph:","");
 								code = code.substring(0,code.lastIndexOf("]"))+"]";
@@ -179,6 +186,7 @@
 								var min = -1;
 								for(i=0;i<evaled.length;i++) {
 								  var val = parseInt(evaled[i].views);
+								  if(isNaN(val)) val =0;
 								  if(min<0 || min>val)
 									min = val;
 								  if(max<val)
@@ -192,16 +200,17 @@
 								values=values.substring(1);
 								  var imgtxt = "<img src=\"http://chart.apis.google.com/chart?"
 								  + "cht=ls"
-								+ "&chds="+min+','+max
-								  + "&chs=60x30"
+								+ "&chds="+0+','+max
+									+ "&chs="+(fill?"100x32":"81x22")
 								  + "&chd=t:"+values
-								  + "&chco=0063DC"
+								  + "&chco=78A2FF"
 								  + "&chls=1,1,0"
-								  + "&chm=o,990000,0,60,4"
-								  + "&chxt=r,x,y"
-								  + "&chxs=0,990000,11,0,_|1,990000,1,0,_|2,990000,1,0,_"
-								  + "&chxl=0:|"+val+"|1:||2:||"
-								  + "&chxp=0,"+val
+									+ "&chm=o,990000,0,81,4"+(fill?"|B,EBEAFF,0,0,0":"")
+								  + "&chxt=r"
+								  + "&chxs=1,990000,1,0,_"
+								  + "&chxl=0:|"+val
+									+ "&chxp=0,"+(val*100/max)
+									+(bg?"&chf=bg,s,f5f5f5":"")
 								  + "\">";
 								  if(withLink) {
 									insert.innerHTML += "<a href="+url+">"+imgtxt+"</a>";
@@ -209,26 +218,64 @@
 																		insert.innerHTML +=imgtxt;
 								  }
 								}
+								}
+								if(insert.innerHTML == '') {
+								  insert.innerHTML = '0';
+								}
+
 							  }
-							});
+							})
 
 	  },
 
 	  init: function() {
-		var statIT = $x1("//td[@class='RHS']/ul/li[3]/a");
-		if(!statIT || statIT.innerHTML != "Photo stats") {
-		 statIT = $x1("//td[@class='RHS']/ul/li[2]/a");
-		}
-		if(statIT && statIT.innerHTML == "Photo stats") {
-		  var url = statIT.href;
-		  this.makeSpark(url,statIT);
-		} else if(document.title == "Flickr: Your Photostream"){
+		 if(document.title == "Flickr: Your Photostream"){
 		  var self = this;
 		  foreach("//p[@class='Activity']",function(el) {
 					var ael = $x1("a",el);
 					self.makeSpark(ael.href+"/stats",el,true);
 				  });
-	  }
+		 } else if(document.title.indexOf('Stats for your account')>=0) {
+		   var self = this;
+		   var cnt = 0;
+		   foreach("//div[@class='yesterday']/table//span[contains(@class,'photo_container')]/a",function(el) {
+
+					 var ael = $x1("td[@class='views']",el.parentNode.parentNode.parentNode);
+						 ael.innerHTML = '';
+					 self.makeSpark(el.href,ael,false,false,(++cnt%2>0));
+				   } );
+		 } else if(document.title.indexOf('All your photos and videos') >= 0) {
+		   var self = this;
+		   var cnt = 0;
+		   foreach("//table//span[contains(@class,'photo_container')]/a",function(el) {
+
+					 var ael = $x1("td[@class='yesterday']",el.parentNode.parentNode.parentNode);
+						 ael.innerHTML = '';
+					 self.makeSpark(el.href+"/stats",ael,false,false,(++cnt%2>0));
+				   } );
+		 } else {
+		   var statIT = $x1("//td[@class='RHS']/ul/li[3]/a");
+		   if(!statIT || statIT.innerHTML != "Photo stats") {
+			 statIT = $x1("//td[@class='RHS']/ul/li[2]/a");
+		   }
+		   if(statIT && statIT.innerHTML == "Photo stats") {
+			 var url = statIT.href;
+			 this.makeSpark(url,statIT);
+		   } else {
+			 var stats = $x1("//a[@title='Your Stats']");
+			 if(stats) {
+			   stats.innerHTML = '';
+			   this.makeSpark(stats.href,stats,false,true);
+			   var self = this;
+			   foreach("//ul[contains(@class,'tt-stats-list')]/li/p/a",function(el) {
+						 var ael = $x1("div[@class='tt-stats-count']",el.parentNode.parentNode);
+						 ael.innerHTML = '';
+						 self.makeSpark(el.href,ael);
+					   });
+
+			 }
+		   }
+		 }
 		}
 
 	}
