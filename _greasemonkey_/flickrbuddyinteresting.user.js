@@ -2,12 +2,14 @@
 // @name	Flickr Buddy Interesting
 // @namespace	http://6v8.gamboni.org/
 // @description Quick access to user's interesting photos from the Buddy Icon Menu
-// @version        0.3
+// @version        0.4
 // @identifier	http://6v8.gamboni.org/IMG/js/flickrbuddyinteresting.user.js
-// @date           2007-06-26
+// @date           2008-12-08
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @contributor    Stephen Fernandez ( http://steeev.freehostia.com )
 // @include http://*flickr.com*
+// @exclude http://*flickr.com/groups/
+// @exclude http://*flickr.com/groups
 // ==/UserScript==
 
 // --------------------------------------------------------------------
@@ -21,17 +23,17 @@
 //
 // --------------------------------------------------------------------
 // Copyright (C) 2006 Pierre Andrews
-// 
+//
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // The GNU General Public License is available by visiting
 //   http://www.gnu.org/copyleft/gpl.html
 // or by writing to
@@ -49,12 +51,12 @@
 		namespace: "http://6v8.gamboni.org/",
 		description: "Quick access to user's interesting photos from the Buddy Icon Menu",
 		identifier: "http://6v8.gamboni.org/IMG/js/flickrbuddyinteresting.user.js",
-		version: "0.3",								// version
-		date: (new Date("2007-06-26"))		// update date
+		version: "0.4",								// version
+		date: (new Date("2008-12-08"))		// update date
 		.valueOf()
 	};
 
-	
+
 	function $x1(xpath) {
 		return document.evaluate(
 								 xpath,
@@ -100,7 +102,7 @@
 				var local = currentLang[string];
 				if(!local) {
 					local = this.localisations[this.localisations.defaultLang][string];
-				} 
+				}
 				if(!local) return string;
 				for(arg in params) {
 					var rep = new RegExp('@'+arg+'@','g');
@@ -115,7 +117,7 @@
 
 	/*****************************Flickr Localisation**********************/
 
-	
+
 	var localiser =  new FlickrLocaliser({
 			'en-us' : {
 				'pool_interesting' : 'Pool Interestingness',
@@ -125,7 +127,7 @@
 			'fr-fr' : {
 				'pool_interesting' : 'Interestingness du Groupe',
 				'quick_interesting' : 'Interestingness Rapide',
-				'close' : 'Fermer'				
+				'close' : 'Fermer'
 			},
 			'it-it' : {
 				'pool_interesting' : 'Interestingness del Gruppo',
@@ -134,7 +136,7 @@
 			},
 			defaultLang: 'en-us'
 		});
-	
+
 	function M8_log() {
 		if(unsafeWindow.console)
 			unsafeWindow.console.log(arguments);
@@ -169,7 +171,7 @@
 
 	function getObjectMethodClosure(object, method) {
 		return function(arg) {
-			return object[method](arg); 
+			return object[method](arg);
 		}
 	}
 
@@ -242,12 +244,12 @@
 				link.setAttribute('href','javascript:;');
 				link.addEventListener('click',getObjectMethodClosure(this,'showInteresting'),true);
 				link.textContent=localiser.localise('quick_interesting');
-			  
+
 				menu.parentNode.insertBefore(link,menu.nextSibling);
 			}
 
  			if(document.location.href.match(/\/groups\//) && unsafeWindow.document.getElementById('SubNav')) {
-				psi=$x1('//p[@class="Links"]');
+				psi=$x1('//p[@class="LinksNewP"]');
 				psi.innerHTML+=' <img src="/images/subnavi_dots.gif" alt="" height="11" width="1"> ';
 				var link =document.createElement('a');
 				link.setAttribute('class','block');;
@@ -259,11 +261,11 @@
 			}
 
 		},
-		
+
 		showInteresting: function(ev) {
 			// create a block element of some kind
 			var boxEle = document.createElement('div');
-			var ul = boxEle.appendChild(document.createElement('ul'));	
+			var ul = boxEle.appendChild(document.createElement('ul'));
 			// style it up with a class or inline
 			boxEle.className = 'popup';
 			// create something to act as a close button
@@ -288,7 +290,7 @@
 					return false;
 				},true);
 			btnClose.setAttribute('style','background-color:#CCC;');
-			
+
 			ul.setAttribute('style','margin:0;padding:0;list-style-type:none;');
 			var self = this;
 			var listener = {
@@ -307,7 +309,7 @@
 							// render it!
 							lwBox.Render();
 						} else
-							M8_log("Error2 "+responseText);							
+							M8_log("Error2 "+responseText);
 					} catch (e) {
 						M8_log("Error1 "+responseText);
 						M8_log(e);
@@ -321,14 +323,14 @@
 														 unsafeWindow.F.API.callMethod('flickr.photos.search', {
 																 user_id: matches[1], sort: 'interestingness-desc', page:1, per_page: 25,
 																	 format: 'json', extras: 'owner_name'
-																	 }, listener);	
+																	 }, listener);
 
 													 if(ev.target.textContent==localiser.localise('pool_interesting')) {
 														 thegroupid=unsafeWindow.document.getElementById('SubNav').innerHTML.split('\/buddyicons\/')[1].split('\.jpg')[0];
 														 unsafeWindow.F.API.callMethod('flickr.photos.search', {
 																 group_id: thegroupid , sort: 'interestingness-desc', page:1, per_page: 25,
 																	 format: 'json', extras: 'owner_name'
-																	 }, listener);	
+																	 }, listener);
 													 }
 													 }
 													}
@@ -337,11 +339,11 @@
 			try {
 				window.addEventListener("load", function () {
 						try {
-										
+
 							// update automatically (http://userscripts.org/scripts/show/2296)
 							win.UserScriptUpdates.requestAutomaticUpdates(SCRIPT);
-						} catch (ex) {} 
-									
+						} catch (ex) {}
+
 						var flickrgp = new flickrbuddyinteresting();
 					}, false);
 			} catch (ex) {}
