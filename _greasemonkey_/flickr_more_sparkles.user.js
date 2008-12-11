@@ -2,9 +2,9 @@
 // @name	Flickr More Sparkles
 // @namespace	http://6v8.gamboni.org/
 // @description Add Sparkle lines for stats of individual photos
-// @version        0.1
+// @version        0.2
 // @identifier	http://6v8.gamboni.org/IMG/js/flickr_more_sparkles.user.js
-// @date           2008-12-10
+// @date           2008-12-11
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include *flickr.com/photos/*
 // @include *flickr.com
@@ -55,8 +55,8 @@
 		namespace: "http://6v8.gamboni.org/",
 		description: "Add Sparkle lines for stats of individual photos",
 		identifier: "http://6v8.gamboni.org/IMG/js/flickr_more_sparkles.user.js",
-		version: "0.1",								// version
-		date: (new Date("2008-12-10"))		// update date
+		version: "0.2",								// version
+		date: (new Date("2008-12-11"))		// update date
 		.valueOf()
 	};
 
