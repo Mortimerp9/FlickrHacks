@@ -2,7 +2,7 @@
 // @name	Flickr More Sparkles
 // @namespace	http://6v8.gamboni.org/
 // @description Add Sparkle lines for stats of individual photos
-// @version        0.2
+// @version        0.3
 // @identifier	http://6v8.gamboni.org/IMG/js/flickr_more_sparkles.user.js
 // @date           2008-12-11
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
@@ -55,7 +55,7 @@
 		namespace: "http://6v8.gamboni.org/",
 		description: "Add Sparkle lines for stats of individual photos",
 		identifier: "http://6v8.gamboni.org/IMG/js/flickr_more_sparkles.user.js",
-		version: "0.2",								// version
+		version: "0.3",								// version
 		date: (new Date("2008-12-11"))		// update date
 		.valueOf()
 	};
@@ -164,10 +164,51 @@
 	flickrmoresparkles.prototype = {
 
 	localiser: new FlickrLocaliser({
-									 'en-us' : {'photo_stats': 'Photo stats'},
-									 'fr-fr':{},
+									 'en-us' : {'photo_stats': 'Photo stats',
+												'account_stats':'Stats for your account',
+												'photostream':"Flickr: Your Photostream",
+												'photos_videos':'All your photos and videos',
+												  'your_stats':'Your Stats'
+},
+	  'fr-fr':{'photo_stats': 'Statistiques de la photo',
+												'account_stats':'Statistiques pour votre compte',
+												'photostream':"Flickr: Votre galerie",
+												'photos_videos':'Toutes vos photos',
+												  'your_stats':'Vos statistiques'},
+
+	  'es-us':{'photo_stats': 'Estadísticas de fotos',
+												'account_stats':'Estadísticas para tu cuenta',
+												'photostream':"Flickr: Tu galería",
+												'photos_videos':'Todas tus fotos y videos',
+			   'your_stats':'Tus estadísticas'},
+				 'zh-hk':{'photo_stats': '相片統計資料',
+												'account_stats':'你的帳號統計資料',
+												'photostream':"Flickr: 你的所有內容",
+												'photos_videos':'你所有的相片和視訊',
+												  'your_stats':'你的統計資料'},
+				 'de-de':{'photo_stats': 'Fotostatistiken',
+												'account_stats':'Statistiken für Ihren Account',
+												'photostream':"Flickr: Ihr Fotostream",
+												'photos_videos':'Alle Ihre Fotos und Videos',
+												  'your_stats':'Ihre Statistiken'},
+				 'ko-kr':{'photo_stats': '사진 통계',
+												'account_stats':'내 Flickr 통계',
+												'photostream':"Flickr: 포토스트림",
+												'photos_videos':'나의 모든 사진 및 동영상',
+												  'your_stats':'내 Flickr 통계'},
+				 'it-it':{'photo_stats': 'Statistiche foto',
+												'account_stats':'Statistiche per il tuo account',
+												'photostream':"Flickr: Il tuo album",
+												'photos_videos':'Tutte le tue foto',
+												  'your_stats':'Le tue statistiche'},
+
+				 'pt-br':{'photo_stats': 'Stats da foto',
+												'account_stats':'Stats da sua conta',
+												'photostream':"Flickr: Sua galeria",
+												'photos_videos':'Todas as suas fotos',
+												  'your_stats':'Suas stats'},
 									 defaultLang:'en-us'
-									   }),
+	  }),
 
 	  makeSpark: function(url, insert, withLink, fill,bg) {
 		  GM_xmlhttpRequest({
@@ -229,13 +270,13 @@
 	  },
 
 	  init: function() {
-		 if(document.title == "Flickr: Your Photostream"){
+		 if(document.title == this.localiser.localise('photostream')){
 		  var self = this;
 		  foreach("//p[@class='Activity']",function(el) {
 					var ael = $x1("a",el);
 					self.makeSpark(ael.href+"/stats",el,true);
 				  });
-		 } else if(document.title.indexOf('Stats for your account')>=0) {
+		 } else if(document.title.indexOf(this.localiser.localise('account_stats'))>=0) {
 		   var self = this;
 		   var cnt = 0;
 		   foreach("//div[@class='yesterday']/table//span[contains(@class,'photo_container')]/a",function(el) {
@@ -244,7 +285,7 @@
 						 ael.innerHTML = '';
 					 self.makeSpark(el.href,ael,false,false,(++cnt%2>0));
 				   } );
-		 } else if(document.title.indexOf('All your photos and videos') >= 0) {
+		 } else if(document.title.indexOf(this.localiser.localise('photos_videos')) >= 0) {
 		   var self = this;
 		   var cnt = 0;
 		   foreach("//table//span[contains(@class,'photo_container')]/a",function(el) {
@@ -258,11 +299,11 @@
 		   if(!statIT || statIT.innerHTML != "Photo stats") {
 			 statIT = $x1("//td[@class='RHS']/ul/li[2]/a");
 		   }
-		   if(statIT && statIT.innerHTML == "Photo stats") {
+		   if(statIT && statIT.innerHTML == this.localiser.localise('photo_stats')) {
 			 var url = statIT.href;
 			 this.makeSpark(url,statIT);
 		   } else {
-			 var stats = $x1("//a[@title='Your Stats']");
+			 var stats = $x1("//a[@title='"+this.localiser.localise('your_stats')+"']");
 			 if(stats) {
 			   stats.innerHTML = '';
 			   this.makeSpark(stats.href,stats,false,true);
