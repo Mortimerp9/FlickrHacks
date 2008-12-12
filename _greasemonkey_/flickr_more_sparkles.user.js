@@ -2,9 +2,9 @@
 // @name	Flickr More Sparkles
 // @namespace	http://6v8.gamboni.org/
 // @description Add Sparkle lines for stats of individual photos
-// @version        0.3
+// @version        0.4
 // @identifier	http://6v8.gamboni.org/IMG/js/flickr_more_sparkles.user.js
-// @date           2008-12-11
+// @date           2008-12-12
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include *flickr.com/photos/*
 // @include *flickr.com
@@ -55,8 +55,8 @@
 		namespace: "http://6v8.gamboni.org/",
 		description: "Add Sparkle lines for stats of individual photos",
 		identifier: "http://6v8.gamboni.org/IMG/js/flickr_more_sparkles.user.js",
-		version: "0.3",								// version
-		date: (new Date("2008-12-11"))		// update date
+		version: "0.4",								// version
+		date: (new Date("2008-12-12"))		// update date
 		.valueOf()
 	};
 
@@ -165,6 +165,7 @@
 
 	localiser: new FlickrLocaliser({
 									 'en-us' : {'photo_stats': 'Photo stats',
+									   'video_stats': 'Video stats',
 												'account_stats':'Stats for your account',
 												'photostream':"Flickr: Your Photostream",
 												'photos_videos':'All your photos and videos',
@@ -176,33 +177,39 @@
 												'photos_videos':'Toutes vos photos',
 												  'your_stats':'Vos statistiques'},
 
-	  'es-us':{'photo_stats': 'Estadísticas de fotos',
+												  'es-us':{'photo_stats': 'Estadísticas de fotos',
+														   'video_stats': 'Estadísticas del video',
 												'account_stats':'Estadísticas para tu cuenta',
 												'photostream':"Flickr: Tu galería",
 												'photos_videos':'Todas tus fotos y videos',
 			   'your_stats':'Tus estadísticas'},
 				 'zh-hk':{'photo_stats': '相片統計資料',
+						  'video_stats':'視訊統計資料',
 												'account_stats':'你的帳號統計資料',
 												'photostream':"Flickr: 你的所有內容",
 												'photos_videos':'你所有的相片和視訊',
 												  'your_stats':'你的統計資料'},
 				 'de-de':{'photo_stats': 'Fotostatistiken',
+						  'video_stats':'Video-Statistiken',
 												'account_stats':'Statistiken für Ihren Account',
 												'photostream':"Flickr: Ihr Fotostream",
 												'photos_videos':'Alle Ihre Fotos und Videos',
 												  'your_stats':'Ihre Statistiken'},
 				 'ko-kr':{'photo_stats': '사진 통계',
+						  'video_stats':'동영상 통계',
 												'account_stats':'내 Flickr 통계',
 												'photostream':"Flickr: 포토스트림",
 												'photos_videos':'나의 모든 사진 및 동영상',
 												  'your_stats':'내 Flickr 통계'},
 				 'it-it':{'photo_stats': 'Statistiche foto',
+						  'video_stats':'Statistiche video',
 												'account_stats':'Statistiche per il tuo account',
 												'photostream':"Flickr: Il tuo album",
 												'photos_videos':'Tutte le tue foto',
 												  'your_stats':'Le tue statistiche'},
 
 				 'pt-br':{'photo_stats': 'Stats da foto',
+						  'video_stats':'Stats do vídeo',
 												'account_stats':'Stats da sua conta',
 												'photostream':"Flickr: Sua galeria",
 												'photos_videos':'Todas as suas fotos',
@@ -288,7 +295,7 @@
 		 } else if(document.title.indexOf(this.localiser.localise('photos_videos')) >= 0) {
 		   var self = this;
 		   var cnt = 0;
-		   foreach("//table//span[contains(@class,'photo_container')]/a",function(el) {
+		   foreach("//table//span[contains(@class,'photo_container')]/a[1]",function(el) {
 
 					 var ael = $x1("td[@class='yesterday']",el.parentNode.parentNode.parentNode);
 						 ael.innerHTML = '';
@@ -299,7 +306,7 @@
 		   if(!statIT || statIT.innerHTML != "Photo stats") {
 			 statIT = $x1("//td[@class='RHS']/ul/li[2]/a");
 		   }
-		   if(statIT && statIT.innerHTML == this.localiser.localise('photo_stats')) {
+		   if(statIT && (statIT.innerHTML == this.localiser.localise('photo_stats') || statIT.innerHTML == this.localiser.localise('video_stats'))) {
 			 var url = statIT.href;
 			 this.makeSpark(url,statIT);
 		   } else {
