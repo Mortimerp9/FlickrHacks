@@ -2,12 +2,13 @@
 // @name	Flickr Exif Info
 // @namespace	http://6v8.gamboni.org/
 // @description Select which exif info you want to see on the photo page
-// @version        0.3
+// @version        0.4
 // @identifier	http://6v8.gamboni.org/IMG/js/flickrexifinfo.user.user.js
-// @date           2006-08-28
+// @date           2008-04-07
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos/*/*
 // @include http://*flickr.com/photo_exif.gne?id=*
+// @include http://*flickr.com/photos/*/*/meta*
 // @exclude http://*flickr.com/photos/organize*
 // ==/UserScript==
 
@@ -22,17 +23,17 @@
 //
 // --------------------------------------------------------------------
 // Copyright (C) 2006 Pierre Andrews
-// 
+//
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // The GNU General Public License is available by visiting
 //   http://www.gnu.org/copyleft/gpl.html
 // or by writing to
@@ -43,10 +44,10 @@
 
 
 (function () {
-	
+
 	//This is an array to help in different conversion of the raw data.
 	// you can map a exif value name as displayed by flickr
-	// with: 
+	// with:
 	// - it's real name in the EXIF info
 	// - it's unit
 	// - the name of the EXIF info defining the unit
@@ -63,7 +64,7 @@
 		'Exposure' : {addtag:{regexp:/.*\(([\/0-9]+)\)/,replacement:'$1s'}},
 	};
 
-	
+
 	//conversion for the units, I have no idea what the 0 and 1 stands for, but 2 is for dpi apparently :D
 	var UNITS = new Array('?','?','dpi');
 
@@ -74,20 +75,20 @@
 		namespace: "http://6v8.gamboni.org/",
 		description: "Select which exif info you want to see on the photo page",
 		identifier: "http://6v8.gamboni.org/IMG/js/flickrexifinfo.user.js",
-		version: "0.3",								// version
-		date: (new Date("2006-08-28"))		// update date
+		version: "0.4",								// version
+		date: (new Date("2008-04-07"))		// update date
 		.valueOf()
 	};
-	
+
 	function getObjectMethodClosure11(object, method,arg1) {
 		return function(arg) {
-			return object[method](arg,arg1); 
+			return object[method](arg,arg1);
 		}
-	}	
+	}
 
 	function M8_log() {
-		if(unsafeWindow.console)
-			unsafeWindow.console.log(arguments);
+		if(console)
+			console.log(arguments);
 		else
 			GM_log(arguments);
 	}
@@ -98,34 +99,34 @@
 		config: GM_getValue('ExifInfoConfig'),
 
 		init: function() {
-			if(document.location.pathname.indexOf("photo_exif.gne") >= 0) {
+			if(document.location.pathname.indexOf("/meta") >= 0) {
 				this.showConfigurationBoxes();
 			} else {
 				this.showMoreExif();
 			}
 		},
-		
+
 		showConfigurationBoxes: function() {
 			var infos = document.evaluate(
-											   "//table[@id='Inbox']/tbody/tr/td[1]/b",
-											   document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null); 
-				for(var i = 0; i < infos.snapshotLength; i++) {  
-						var exif = infos.snapshotItem(i);
-						var name = exif.innerHTML.replace(/:$/,'');
-						var check = document.createElement('input');
-						check.type = 'checkbox';
-						check.addEventListener('change',getObjectMethodClosure11(this,'addToConf',name),false);
-						if(i == 0) {
-							check.checked = true;
-							check.disabled = true;
-						} else if(this.config && (this.config.indexOf(','+name+',') >= 0)) {
-							check.checked = true;
-						}
-						var td = document.createElement('td');
-						td.style.width = '13px';
-						td.appendChild(check);
-						exif.parentNode.parentNode.insertBefore(td,exif.parentNode);
+										  "//table[@id='Inbox']/tbody/tr/td[1]/b",
+										  document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+			for(var i = 0; i < infos.snapshotLength; i++) {
+				var exif = infos.snapshotItem(i);
+				var name = exif.innerHTML.replace(/:$/,'');
+				var check = document.createElement('input');
+				check.type = 'checkbox';
+				check.addEventListener('change',getObjectMethodClosure11(this,'addToConf',name),false);
+				if(i == 0) {
+					check.checked = true;
+					check.disabled = true;
+				} else if(this.config && (this.config.indexOf(','+name+',') >= 0)) {
+					check.checked = true;
 				}
+				var td = document.createElement('td');
+				td.style.width = '13px';
+				td.appendChild(check);
+				exif.parentNode.parentNode.insertBefore(td,exif.parentNode);
+			}
 		},
 
 		addToConf: function(event, name) {
@@ -135,9 +136,8 @@
 				newConfig += name+',';
 			} else {
 				newConfig = newConfig.replace(','+name+',',',');
-			}	
+			}
 			this.config = newConfig;
-			M8_log(this.config);
 			GM_setValue('ExifInfoConfig',this.config);
 		},
 
@@ -146,13 +146,13 @@
 										 "//td[@class='RHS']/ul//li/a[@class='Plain']",
 										 document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null
 										 );
-			for(var i = 0; i < moreLot.snapshotLength; i++) {  
+			for(var i = 0; i < moreLot.snapshotLength; i++) {
 				var more = moreLot.snapshotItem(i);
 				if(more.innerHTML == "More properties") {
-					var photoid = more.href.replace(/http:\/\/(www.)?flickr.com\/photo_exif.gne\?id=([0-9]+)/,'$2');
+					var photoid = more.href.replace(/http:\/\/(www.)?flickr.com\/photos\/[^\/]*\/([0-9]+)\/meta/,'$2');
 					if(this.config.length > 1) {
 						var ul = document.createElement('ul');
-						
+
 						var self = this;
 						var listener = {
 							flickr_photos_getExif_onLoad: function(success, responseXML, responseText, params){
@@ -173,7 +173,7 @@
 										}
 										if(new String(ex.clean).length > 0)
 											ex = ex.clean;
-										else 
+										else
 											ex = ex.raw;
 										if(new String(ex).length > 0) {
 											var unit = '';
@@ -185,7 +185,7 @@
 											}
 											var li = ul.appendChild(document.createElement('li'));
 											li.className = 'Stats';
-											li.innerHTML = '<b>'+finds[i]+':</b> '+ex;	
+											li.innerHTML = '<b>'+finds[i]+':</b> '+ex;
 											if(unit && new String(unit).length > 0)
 												li.innerHTML += ' '+unit;
 											if(document.getElementById('tagadderlink')) {
@@ -206,11 +206,11 @@
 								ul.appendChild(li);
 							}
 						};
-						
+
 						unsafeWindow.F.API.callMethod('flickr.photos.getExif', {
-								photo_id:photoid				   
+								photo_id:photoid
 									}, listener);
-						
+
 					}
 					break;
 				}
@@ -235,11 +235,11 @@
 	try {
 		window.addEventListener("load", function () {
 									try {
-										
+
 										// update automatically (http://userscripts.org/scripts/show/2296)
 										win.userScriptUpdates.requestAutomaticUpdates(SCRIPT);
-									} catch (ex) {} 
-									
+									} catch (ex) {}
+
 									var flickrgp = new flickrexifinfo();
 		}, false);
 	} catch (ex) {}
