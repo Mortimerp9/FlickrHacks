@@ -2,12 +2,12 @@
 // @name	 Flickr Pool Date
 // @namespace	http://6v8.gamboni.org/
 // @description Show when the photo was added to the group pool
-// @version        0.4
+// @version        0.5
 // @identifier	http://6v8.gamboni.org/IMG/js/flickrpooldate.user.user.js
-// @date           2006-10-06
+// @date           2008-01-19
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/groups/*/pool*
-// 
+//
 // ==/UserScript==
 
 // --------------------------------------------------------------------
@@ -21,17 +21,17 @@
 //
 // --------------------------------------------------------------------
 // Copyright (C) 2006 Pierre Andrews
-// 
+//
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // The GNU General Public License is available by visiting
 //   http://www.gnu.org/copyleft/gpl.html
 // or by writing to
@@ -49,12 +49,12 @@
 		namespace: "http://6v8.gamboni.org/",
 		description: "Show when the photo was added to the group pool",
 		identifier: "http://6v8.gamboni.org/IMG/js/flickrpooldate.user.user.js",
-		version: "0.4",								// version
-		date: (new Date("2006-10-06"))		// update date
+		version: "0.5",								// version
+		date: (new Date("2008-01-19"))		// update date
 		.valueOf()
 	};
 
-	
+
 	function M8_log() {
 		if(unsafeWindow.console)
 			unsafeWindow.console.log(arguments);
@@ -62,10 +62,10 @@
 			GM_log(arguments);
 	}
 
-	
+
 	function getObjectMethodClosure(object, method) {
 		return function() {
-			return object[method](); 
+			return object[method]();
 		}
 	}
 
@@ -82,29 +82,28 @@
 				this.page = matches[1];
 
 			var self = this;
-			
+
 			var listener = {
 				flickr_urls_lookupGroup_onLoad: function(success, responseXML, responseText, params){
 					if(success) {
 						var rsp = responseText.replace(/<\?xml.*\?>/,'');
 						rsp = new XML(rsp);
-						self.group_id = rsp.group.@id;	
+						self.group_id = rsp.group.@id;
 					} else
 						M8_log(responseText);
 				}
 			};
-			
+
 			unsafeWindow.F.API.callMethod('flickr.urls.lookupGroup', {
-				url:document.location				   
+				url:document.location
 			}, listener);
-			
 			this.waitForGroupId();
 		},
 
 		waitForGroupId: function() {
 			if(this.group_id) {
-				
-				var self = this;			
+
+				var self = this;
 				var listener = {
 					flickr_groups_pools_getPhotos_onLoad: function(success, responseXML, responseText, params){
 						if(success) {
@@ -116,7 +115,7 @@
 							M8_log(responseText);
 					}
 				};
-				
+
 				var params =  {
 					group_id:this.group_id,
 					per_page:30,
@@ -125,7 +124,7 @@
 
 				if(matches = /\/pool\/([0-9]+@N[0-9]{2})\/?/.exec(document.location.pathname)) {
 					params['user_id'] = matches[1];
-				} 
+				}
 				if(matches = /\/pool\/tags\/([^\/]+)/.exec(document.location.pathname)) {
 					params['tags'] = matches[1];
 					params['per_page'] = 24;
@@ -163,9 +162,9 @@
 
 		insertDates: function(photos) {
 				var images = document.evaluate(
-											 "//div/p[contains(@class,'PoolList')]/a/img",
-										  document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null); 
-				for(var i = 0; i < images.snapshotLength; i++) {  
+											 "//div/p[contains(@class,'PoolList')]//a/img",
+										  document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+				for(var i = 0; i < images.snapshotLength; i++) {
 					var image = images.snapshotItem(i);
 					var matches = /\/([0-9]+)_/.exec(image.src);
 					if(matches) {
@@ -183,18 +182,18 @@
 				}
 		}
 
-		
+
 	}
 	//======================================================================
 	// launch
 	try {
 		window.addEventListener("load", function () {
 									try {
-										
+
 										// update automatically (http://userscripts.org/scripts/show/2296)
 										win.UserScriptUpdates.requestAutomaticUpdates(SCRIPT);
-									} catch (ex) {} 
-									
+									} catch (ex) {}
+
 									var flickrgp = new FlickrPoolDate();
 		}, false);
 	} catch (ex) {}
