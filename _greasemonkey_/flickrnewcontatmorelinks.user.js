@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr New Contat More Links
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description When reading a Flickr Mail about someone adding you as contact, this script inserts more links and info about this user.
 // @version        0.6
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrnewcontactmorelinks.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrnewcontactmorelinks.user.js
 // @date           2007-06-26
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/messages_read.gne*
@@ -46,9 +46,9 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr New Contat More Links",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "When reading a Flickr Mail about someone adding you as contact, this script inserts more links and info about this user.",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrnewcontactmorelinks.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrnewcontactmorelinks.user.js",
 		version: "0.6",								// version
 		date: (new Date("2007-05-26"))		// update date
 		.valueOf()

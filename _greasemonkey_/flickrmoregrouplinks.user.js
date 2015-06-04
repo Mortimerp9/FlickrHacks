@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr More Group Links
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Add more links to browse a group pool (random photos, leech, etc..)
 // @version        0.3
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrmoregrouplinks.user.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrmoregrouplinks.user.user.js
 // @date           2006-08-25
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/groups/*
@@ -47,9 +47,9 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr More Group Links",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Add more links to browse a group pool (random photos, leech, etc..)",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrmoregrouplinks.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrmoregrouplinks.user.js",
 		version: "0.3",								// version
 		date: (new Date("2006-08-25"))		// update date
 		.valueOf()

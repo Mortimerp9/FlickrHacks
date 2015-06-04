@@ -7,10 +7,10 @@
 //
 // ==UserScript==
 // @name	Flickr Group Page Enhancer
-// @namespace	http://6v8.gamboni.org/Flickr-Groug-Page-Enhancer.html
+// @namespace	http://pierreandrews.net/Flickr-Groug-Page-Enhancer.html
 // @description	Add more information on the groups
-// @source         http://6v8.gamboni.org/Flickr-Groug-Page-Enhancer.html
-// @identifier     http://6v8.gamboni.org/IMG/js/flickrgrouppageenhancer.user.js
+// @source         http://pierreandrews.net/Flickr-Groug-Page-Enhancer.html
+// @identifier     http://pierreandrews.net/IMG/js/flickrgrouppageenhancer.user.js
 // @version        0.6
 // @date           2006-06-06
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
@@ -29,10 +29,10 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Group Page Enhancer",
-		namespace: "http://6v8.gamboni.org/Flickr-Groug-Page-Enhancer.html",
+		namespace: "http://pierreandrews.net/Flickr-Groug-Page-Enhancer.html",
 		description: "Add more information on the groups",
-		source: "http://6v8.gamboni.org/Flickr-Groug-Page-Enhancer.html",			// script homepage/description URL
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrgrouppageenhancer.user.js",
+		source: "http://pierreandrews.net/Flickr-Groug-Page-Enhancer.html",			// script homepage/description URL
+		identifier: "http://pierreandrews.net/IMG/js/flickrgrouppageenhancer.user.js",
 		version: "0.6",								// version
 		date: (new Date(2006, 6, 6))		// update date
 		.valueOf()

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Replace Smiley
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Replace replace img smiley by a text
 // @version        0.1
-// @identifier	http://6v8.gamboni.org/IMG/js/replacesmiley.user.js
+// @identifier	http://pierreandrews.net/IMG/js/replacesmiley.user.js
 // @date           2007-03-07
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com*
@@ -46,9 +46,9 @@ var TOTEXT = false;
 	//update information
 	var SCRIPT = {
 		name: "Replace Smiley",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Replace smileys by an image, or replace img smiley by a text",
-		identifier: "http://6v8.gamboni.org/IMG/js/replacesmiley.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/replacesmiley.user.js",
 		version: "0.1",								// version
 		date: (new Date("2007-03-07"))		// update date
 		.valueOf()

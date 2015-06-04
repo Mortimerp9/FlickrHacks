@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	FlickrPoolDetails
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description This script brings the "detailed view" feature to the group pool pages.
 // @version        0.1
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrpooldetails.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrpooldetails.user.js
 // @date           2006-12-04
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://www.flickr.com/groups/sciencegroup/pool/*
@@ -45,9 +45,9 @@
 	//update information
 	var SCRIPT = {
 		name: "FlickrPoolDetails",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "This script brings the 'detailed view' feature to the group pool pages.",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrpooldetails.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrpooldetails.user.js",
 		version: "0.1",								// version
 		date: (new Date("2006-12-04"))		// update date
 		.valueOf()

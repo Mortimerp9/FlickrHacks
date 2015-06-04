@@ -2,7 +2,7 @@
 // @name            Flickr Quick Comment
 // @description     Adds a select box with pre written comments. Derived from Steeev Group Promotion Tool
 // @author          Pierre Andrews. (code base Steeev http://steeev.f2o.org/, pt translation by Perla* <http://www.flickr.com/photos/bobnperla/>)
-// @namespace       http://6v8.gamboni.org/
+// @namespace       http://pierreandrews.net/
 // @include         http://*flickr.com/photos/*
 // @include         http://*flickr.com/groups/*/discuss*
 // @include         http://*flickr.com/groups*

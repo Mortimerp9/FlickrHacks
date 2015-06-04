@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr Upcoming Event
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description This is a greasemonkey script to enhance flickr pages and be able to easilly associate photos with an upcoming event. When a shot is associated to an event, it can then be tagged and located from the data provided by the event.
 // @version        0.7
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrupcomingevent.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrupcomingevent.user.js
 // @date           2007-06-26
 // @creator        Pierre Andrews (mortimer.pa@free.fr) , pt translation by Perla* <http://www.flickr.com/photos/bobnperla/>
 // @include http://*flickr.com/photos/*/*
@@ -49,9 +49,9 @@ var UPCOMING_API_URL = 'http://upcoming.yahooapis.com/services/rest/';
 	//update information
 	var SCRIPT = {
 		name: "Flickr Upcoming Event",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "This is a greasemonkey script to enhance flickr pages and be able to easilly associate photos with an upcoming event. When a shot is associated to an event, it can then be tagged and located from the data provided by the event.",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrupcomingevent.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrupcomingevent.user.js",
 		version: "0.7",								// version
 		date: (new Date("2007-06-28"))		// update date
 		.valueOf()

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr Exif Info
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Select which exif info you want to see on the photo page
 // @version        0.4
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrexifinfo.user.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrexifinfo.user.user.js
 // @date           2008-04-07
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos/*/*
@@ -72,9 +72,9 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Exif Info",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Select which exif info you want to see on the photo page",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrexifinfo.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrexifinfo.user.js",
 		version: "0.4",								// version
 		date: (new Date("2008-04-07"))		// update date
 		.valueOf()

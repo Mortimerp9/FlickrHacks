@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flyr Pool
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description display directly a google map of the pool using Flyr. Works on most of the pages showing multiple photos (group pool, tag pool, search, user page, set pool) 
 // @version        0.3
-// @identifier	http://6v8.gamboni.org/IMG/js/flyrpool.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flyrpool.user.js
 // @date           2006-05-18
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos/*
@@ -44,10 +44,10 @@
 
 	var SCRIPT = {
 		name: "Flyr Pool",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Display directly a google map of the pool using Flyr.",
-		source: "http://6v8.gamboni.org/Flyr-Pool.html",			// script homepage/description URL
-		identifier: "http://6v8.gamboni.org/IMG/js/flyrpool.user.js",
+		source: "http://pierreandrews.net/Flyr-Pool.html",			// script homepage/description URL
+		identifier: "http://pierreandrews.net/IMG/js/flyrpool.user.js",
 		version: "0.3",								// version
 		date: (new Date(2006, 05, 18))		// update date
 		.valueOf()

@@ -5,7 +5,7 @@
 //
 // ==UserScript==
 // @name	Flickr Auto Page
-// @namespace	http://6v8.gamboni.org/Flickr-Auto-Pagination.html
+// @namespace	http://pierreandrews.net/Flickr-Auto-Pagination.html
 // @description removes the need to paginate when browsing flickr
 // @version        0.99
 // @date           2007-07-22
@@ -43,10 +43,10 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Auto Page",
-		namespace: "http://6v8.gamboni.org/Flickr-Auto-Pagination.html",
+		namespace: "http://pierreandrews.net/Flickr-Auto-Pagination.html",
 		description: "removes the need to paginate when browsing flickr.",
-		source: "http://6v8.gamboni.org/Flickr-Auto-Page.html",			// script homepage/description URL
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrautopage.user.js",
+		source: "http://pierreandrews.net/Flickr-Auto-Page.html",			// script homepage/description URL
+		identifier: "http://pierreandrews.net/IMG/js/flickrautopage.user.js",
 		version: "0.99",								// version
 		date: (new Date(2007, 07,22))		// update date
 		.valueOf()

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr Check Buddy Activity
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Check when a particular user commented/faved a photo of your for the last time
 // @version        0.5
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrcheckbuddyactivity.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrcheckbuddyactivity.user.js
 // @date           2007-07-02
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://www.flickr.com*
@@ -48,9 +48,9 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Check Buddy Activity",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Check when a particular user commented/faved a photo of your for the last time",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrcheckbuddyactivity.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrcheckbuddyactivity.user.js",
 		version: "0.5",								// version
 		date: (new Date("2007-07-02"))		// update date
 		.valueOf()

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr Go To Reply
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description add a link to find the comment box easily
 // @version        0.1
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrgotoreply.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrgotoreply.user.js
 // @date           2006-07-05
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos/*/*

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr Easy NSID
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Easily find your and other users NSID on flickr
 // @version        0.2
-// @identifier	http://6v8.gamboni.org/IMG/js/flickreasynsid.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickreasynsid.user.js
 // @date           2007-07-12
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://flickr.com*
@@ -46,9 +46,9 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Easy NSID",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Easily find your and other users NSID on flickr",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickreasynsid.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickreasynsid.user.js",
 		version: "0.2",								// version
 		date: (new Date("2007-07-12"))		// update date
 		.valueOf()

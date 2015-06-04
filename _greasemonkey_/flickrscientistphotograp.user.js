@@ -7,7 +7,7 @@
 //
 // ==UserScript==
 // @name	Flickr Scientist Photographers tools
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description	tools for administrators of the scientist photographers group.
 // @version        0.1
 // @date           2006-19-06
@@ -24,9 +24,9 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Scientist Photographers tools",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Tools for administrators of the scientist photographers group.",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrscientistphotograp.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrscientistphotograp.user.js",
 		version: "0.2",								// version
 		date: (new Date(2006, 6, 24))		// update date
 		.valueOf()

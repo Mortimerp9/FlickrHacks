@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr Favorite Users
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description See more of your favorite users
 // @version        0.5
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrfavoriteusers.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrfavoriteusers.user.js
 // @date           2007-02-14
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/people/*/contacts/
@@ -46,9 +46,9 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Favorite Users",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "See more of your favorite users",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrfavoriteusers.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrfavoriteusers.user.js",
 		version: "0.5",								// version
 		date: (new Date("2007-02-14"))		// update date
 		.valueOf()

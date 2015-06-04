@@ -7,10 +7,10 @@
 //
 // ==UserScript==
 // @name	Flickr Snap
-// @namespace	http://6v8.gamboni.org/Flickr-Snap.html
+// @namespace	http://pierreandrews.net/Flickr-Snap.html
 // @description	Add thumbnails of flickr image where a link goes there.
-// @source         http://6v8.gamboni.org/Flickr-Snap.html
-// @identifier     http://6v8.gamboni.org/IMG/js/flickrsnap.user.js
+// @source         http://pierreandrews.net/Flickr-Snap.html
+// @identifier     http://pierreandrews.net/IMG/js/flickrsnap.user.js
 // @version        0.1
 // @date           2006-05-09
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
@@ -27,10 +27,10 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Snap",
-		namespace: "http://6v8.gamboni.org/Flickr-Snap.html",
+		namespace: "http://pierreandrews.net/Flickr-Snap.html",
 		description: "Add thumbnails of flickr image where a link goes there.",
-		source: "http://6v8.gamboni.org/Flickr-Snap.html",			// script homepage/description URL
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrsnap.user.js",
+		source: "http://pierreandrews.net/Flickr-Snap.html",			// script homepage/description URL
+		identifier: "http://pierreandrews.net/IMG/js/flickrsnap.user.js",
 		version: "0.1",								// version
 		date: (new Date(2006, 5, 09))		// update date
 		.valueOf()

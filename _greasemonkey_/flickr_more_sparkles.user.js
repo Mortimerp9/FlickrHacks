@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr More Sparkles
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Add Sparkle lines for stats of individual photos
 // @version        0.4
-// @identifier	http://6v8.gamboni.org/IMG/js/flickr_more_sparkles.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickr_more_sparkles.user.js
 // @date           2008-12-12
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include *flickr.com/photos/*
@@ -52,9 +52,9 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr More Sparkles",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Add Sparkle lines for stats of individual photos",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickr_more_sparkles.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickr_more_sparkles.user.js",
 		version: "0.4",								// version
 		date: (new Date("2008-12-12"))		// update date
 		.valueOf()

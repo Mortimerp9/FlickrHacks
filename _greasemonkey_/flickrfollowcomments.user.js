@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr Follow Comments
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Filter the comment you've made to only follow the one that interest you.
 // @version        0.6
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrfollowcomments.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrfollowcomments.user.js
 // @date           2007-02-22
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos_comments.gne
@@ -47,9 +47,9 @@ var FETCH_PHOTOS = 50;
 	//update information
 	var SCRIPT = {
 		name: "Flickr Follow Comments",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Filter the comment you've made to only follow the one that interest you.",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrfollowcomments.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrfollowcomments.user.js",
 		version: "0.6",								// version
 		date: (new Date("2006-02-22"))		// update date
 		.valueOf()

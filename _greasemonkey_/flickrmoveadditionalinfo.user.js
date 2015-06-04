@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr Move Additional Info
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Move photos additional informations on top of the group/set list
 // @version        0.3
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrmoveadditionalinfo.user.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrmoveadditionalinfo.user.user.js
 // @date           2006-01-29
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos/*/*
@@ -47,9 +47,9 @@
 	//update information
 	var SCRIPT = {
 		name: "Move Additional Info",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Move photos additional informations on top of the group/set list",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrmoveadditionalinfo.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrmoveadditionalinfo.user.js",
 		version: "0.3",								// version
 		date: (new Date("2006-01-29"))		// update date
 		.valueOf()

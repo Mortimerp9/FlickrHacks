@@ -7,10 +7,10 @@
 //
 // ==UserScript==
 // @name	Flickr Group Comments
-// @namespace	http://6v8.gamboni.org/Flickr-view-group-comments.html
+// @namespace	http://pierreandrews.net/Flickr-view-group-comments.html
 // @description	Display the recent comments in your groups directly in the recent change page
-// @source         http://6v8.gamboni.org/Flickr-view-group-comments.html
-// @identifier     http://6v8.gamboni.org/IMG/js/flickrgroupcomments.user.js
+// @source         http://pierreandrews.net/Flickr-view-group-comments.html
+// @identifier     http://pierreandrews.net/IMG/js/flickrgroupcomments.user.js
 // @version        0.8
 // @date           2006-05-26
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
@@ -33,10 +33,10 @@ var AUTO_RELOAD = 10;
 	//update information
 	var SCRIPT = {
 		name: "Flickr Group Comments",
-		namespace: "http://6v8.gamboni.org/Flickr-view-group-comments.html",
+		namespace: "http://pierreandrews.net/Flickr-view-group-comments.html",
 		description: "Display the recent comments in your groups directly in the recent change page",
-		source: "http://6v8.gamboni.org/Flickr-view-group-comments.html",			// script homepage/description URL
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrgroupcomments.user.js",
+		source: "http://pierreandrews.net/Flickr-view-group-comments.html",			// script homepage/description URL
+		identifier: "http://pierreandrews.net/IMG/js/flickrgroupcomments.user.js",
 		version: "0.8",								// version
 		date: (new Date(2006, 5, 26))		// update date
 		.valueOf()

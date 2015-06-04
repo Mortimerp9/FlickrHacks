@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name	Flickr more menus
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Introduces some submenus for flickr gamma
 // @version        0.9
-// @source http://6v8.gamboni.org/Flickr-More-menus.html
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrmoremenus.user.js
+// @source http://pierreandrews.net/Flickr-More-menus.html
+// @identifier	http://pierreandrews.net/IMG/js/flickrmoremenus.user.js
 // @date           2007-07-16
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/*
@@ -49,10 +49,10 @@
 
 		var SCRIPT = {
 		name: "Flick more menus",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Introduces some submenus for flickr gamma",
-		source: "http://6v8.gamboni.org/Flickr-More-menus.html",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrmoremenus.user.js",
+		source: "http://pierreandrews.net/Flickr-More-menus.html",
+		identifier: "http://pierreandrews.net/IMG/js/flickrmoremenus.user.js",
 		version: "0.9",								// version
 		date: (new Date(2007, 07, 16))		// update date
 		.valueOf()

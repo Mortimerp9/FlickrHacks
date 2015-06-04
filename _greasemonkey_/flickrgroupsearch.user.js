@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr group search
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description add a direct group search box when you are reading a group thread.
 // @version        0.1
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrgroupsearch.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrgroupsearch.user.js
 // @date           2006-05-24
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/groups/*/discuss/*

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr Geo Info To Tag
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Provide a button to transform geographic information provided by flickr map to usual tags.
 // @version        0.1
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrgeoinfototag.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrgeoinfototag.user.js
 // @date           2006-08-28
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos/*/*
@@ -45,9 +45,9 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Geo Info To Tag",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Provide a button to transform geographic information provided by flickr map to usual tags.",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrgeoinfototag.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrgeoinfototag.user.js",
 		version: "0.1",								// version
 		date: (new Date("2006-08-28"))		// update date
 		.valueOf()

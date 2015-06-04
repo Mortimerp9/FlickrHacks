@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	 Flickr Easy Photo Post
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Remembers the photo you just visited on flickr and offers you an easy way to post them in a comment.
 // @version        0.5
-// @identifier	http://6v8.gamboni.org/IMG/js/flickreasyphotopost.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickreasyphotopost.user.js
 // @date           2007-06-26
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos/*/*
@@ -52,9 +52,9 @@ var MEMORY = 15;
 	//update information
 	var SCRIPT = {
 		name: " Flickr Easy Photo Post",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Remembers the photo you just visited on flickr and offers you an easy way to post them in a comment.",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickreasyphotopost.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickreasyphotopost.user.js",
 		version: "0.5",								// version
 		date: (new Date("2007-06-26"))		// update date
 		.valueOf()
@@ -297,7 +297,7 @@ var MEMORY = 15;
 											   name = GM_getValue(index+".ownerurl").replace('photos','').replace(/\//g,'');
 										   }
 
-										   var mesg = "&quot;"+GM_getValue(index+".title")+"&quot; by "+name+' <a href="http://6v8.gamboni.org/Flickr-Easy-Photo-Post.html">[?]</a>'+
+										   var mesg = "&quot;"+GM_getValue(index+".title")+"&quot; by "+name+' <a href="http://pierreandrews.net/Flickr-Easy-Photo-Post.html">[?]</a>'+
 "\n"+'<a href="http://www.flickr.com'+GM_getValue(index+".ownerurl")+GM_getValue(index+".id")+'/" title="Go to the photo page"><img src="http://static.flickr.com/'+GM_getValue(index+".server")+'/'+GM_getValue(index+".id")+'_'+GM_getValue(index+".secret")+size+'.jpg" alt="'+GM_getValue(index+".title")+'" alt="'+GM_getValue(index+".title")+' by '+name.replace(/<\/?b>/g,'')+'"/></a>';
 										   for (var i = 0; i < allTextAreas.length; i++) {
 											   thisTextArea = allTextAreas[i];

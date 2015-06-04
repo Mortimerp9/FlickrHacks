@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	 Flickr Pool Date
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Show when the photo was added to the group pool
 // @version        0.5
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrpooldate.user.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrpooldate.user.user.js
 // @date           2008-01-19
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/groups/*/pool*
@@ -46,9 +46,9 @@
 	//update information
 	var SCRIPT = {
 		name: " Flickr Pool Date",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Show when the photo was added to the group pool",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrpooldate.user.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrpooldate.user.user.js",
 		version: "0.5",								// version
 		date: (new Date("2008-01-19"))		// update date
 		.valueOf()

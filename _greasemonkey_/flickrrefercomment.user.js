@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr Refer Comment
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Auto comment the place where you come from
 // @version        1.8
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrrefercomment.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrrefercomment.user.js
 // @date           2008-12-16
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos/*/*
@@ -38,9 +38,9 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Refer Comment",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "auto comment the place where you come from",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrrefercomment.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrrefercomment.user.js",
 		version: "1.7",								// version
 		date: (new Date(2008, 05, 30))		// update date
 		.valueOf()
@@ -269,7 +269,7 @@ this.init();}
 			if(url)
 			html = '<a href="'+url+'" title="Seen on...">'+comment+'</a>';
 			html = "\n\n--\n<i>"+html+"</i>"+
-			' <em>(<a href="http://6v8.gamboni.org/Flickr-Add-referer-into-comments.html">?</a>)</em>';
+			' <em>(<a href="http://pierreandrews.net/Flickr-Add-referer-into-comments.html">?</a>)</em>';
 			var thisTextAreas = document.getElementsByTagName('textarea');
 			var thisTextArea = null;
 			for(var t=0;t<thisTextAreas.length;t++) {

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr Photo Compass
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Show nearby photos at the cardinate points
 // @version        0.9
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrphotocompass.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrphotocompass.user.js
 // @date           2007-04-01
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos/*/*
@@ -46,9 +46,9 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Photo Compass",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Show nearby photos at the cardinate points",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrphotocompass.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrphotocompass.user.js",
 		version: "0.9",								// version
 		date: (new Date("2007-04-01"))		// update date
 		.valueOf()

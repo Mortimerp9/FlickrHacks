@@ -7,7 +7,7 @@
 //
 // ==UserScript==
 // @name	Flickr Auto Tag
-// @namespace	http://6v8.gamboni.org/Flickr-Auto-Tag.html
+// @namespace	http://pierreandrews.net/Flickr-Auto-Tag.html
 // @description	Save and reuse quickly the tags you often use.
 // @version        0.3
 // @date           2007-06-26
@@ -23,10 +23,10 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Auto Tag",
-		namespace: "http://6v8.gamboni.org/Flickr-Auto-Tag.html",
+		namespace: "http://pierreandrews.net/Flickr-Auto-Tag.html",
 		description: "Save and reuse quickly the tags you often use.",
-		source: "http://6v8.gamboni.org/Flickr-Auto-Tag.html",			// script homepage/description URL
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrautotag.user.js",
+		source: "http://pierreandrews.net/Flickr-Auto-Tag.html",			// script homepage/description URL
+		identifier: "http://pierreandrews.net/IMG/js/flickrautotag.user.js",
 		version: "0.3",								// version
 		date: (new Date(2007, 6, 26))		// update date
 		.valueOf()

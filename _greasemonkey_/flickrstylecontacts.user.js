@@ -16,7 +16,7 @@
 //
 // ==UserScript==
 // @name	Flickr Style Contacts
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description	Style comments and photos on flickr
 // @version        0.5
 // @date           2006-06-06
@@ -81,10 +81,10 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Style Contacts",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Style comments and photos on flickr",
-		source: "http://6v8.gamboni.org/Flickr-style-your-contacts.html",			// script homepage/description URL
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrstylecontacts.user.js",
+		source: "http://pierreandrews.net/Flickr-style-your-contacts.html",			// script homepage/description URL
+		identifier: "http://pierreandrews.net/IMG/js/flickrstylecontacts.user.js",
 		version: "0.5",								// version
 		date: (new Date(2006, 6, 6))		// update date
 		.valueOf()

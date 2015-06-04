@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr surf
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Links to the surf page from a photo
 // @version        0.1
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrsurf.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrsurf.user.js
 // @date           2006-05-23
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @include http://*flickr.com/photos/*

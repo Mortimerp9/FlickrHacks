@@ -7,7 +7,7 @@
 //
 // ==UserScript==
 // @name	Flickr More Search
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description	Search all of your contacts for photos, and more...
 // @version        0.8
 // @date           2006-06-04
@@ -34,10 +34,10 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr More Search",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Search for photos for all of your contacts, and more...",
-		source: "http://6v8.gamboni.org/Flickr-more-search.html",			// script homepage/description URL
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrmoresearch.user.js",
+		source: "http://pierreandrews.net/Flickr-more-search.html",			// script homepage/description URL
+		identifier: "http://pierreandrews.net/IMG/js/flickrmoresearch.user.js",
 		version: "0.8",								// version
 		date: (new Date(2006, 6, 4))		// update date
 		.valueOf()

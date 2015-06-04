@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name	Flickr Buddy Interesting
-// @namespace	http://6v8.gamboni.org/
+// @namespace	http://pierreandrews.net/
 // @description Quick access to user's interesting photos from the Buddy Icon Menu
 // @version        0.3
-// @identifier	http://6v8.gamboni.org/IMG/js/flickrbuddyinteresting.user.js
+// @identifier	http://pierreandrews.net/IMG/js/flickrbuddyinteresting.user.js
 // @date           2007-06-26
 // @creator        Pierre Andrews (mortimer.pa@free.fr)
 // @contributor    Stephen Fernandez ( http://steeev.freehostia.com )
@@ -46,9 +46,9 @@
 	//update information
 	var SCRIPT = {
 		name: "Flickr Buddy Interesting",
-		namespace: "http://6v8.gamboni.org/",
+		namespace: "http://pierreandrews.net/",
 		description: "Quick access to user's interesting photos from the Buddy Icon Menu",
-		identifier: "http://6v8.gamboni.org/IMG/js/flickrbuddyinteresting.user.js",
+		identifier: "http://pierreandrews.net/IMG/js/flickrbuddyinteresting.user.js",
 		version: "0.3",								// version
 		date: (new Date("2007-06-26"))		// update date
 		.valueOf()
